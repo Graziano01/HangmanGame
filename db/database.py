@@ -30,3 +30,14 @@ def Register():
             # TODO: add success message
         curs.close()
         conn.close()
+
+def Login():
+    Database()
+    if USERNAME.get() == "" or PASSWORD.get() == "":
+        print("Complete the required field!") # Change with label config
+    else:
+        curs.execute("SELECT * FROM `user` WHERE `username` = ? AND `password` = ?", (USERNAME.get(), PASSWORD.get()))
+        if curs.fetchone() is not None:
+            print("Successfully login!") # Change with label config
+        else:
+            print("Invalid username or password!")
