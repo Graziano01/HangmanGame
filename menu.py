@@ -4,8 +4,8 @@ import sqlite3
 
 """
 FIX:
-login e register
-
+login e register bug
+---background---
 """
 
 root = Tk()
@@ -22,7 +22,12 @@ y = (screen_height/2) - (height/2)
 root.geometry("%dx%d+%d+%d" % (width, height, x, y))
 root.resizable(0, 0)
 
-lab = Label(root, text='The Hangman Game!', font=('Georgia', 40))
+# Background image
+image = PhotoImage(file="hangman.png")
+labImage = Label(root, image=image)
+labImage.place(x=0, y=0)
+
+lab = Label(root, text='The Hangman Game!', font=('Georgia', 40), bg="#ffffff")
 lab.pack(side='top')
 
 USERNAME = StringVar()
