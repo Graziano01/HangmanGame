@@ -6,12 +6,12 @@ pygame.init()                                                       # Inizializz
 SCREEN = pygame.display.set_mode((1280, 720))                       # Main Menu
 pygame.display.set_caption("Hangman Game")                          # Titolo della finestra
 
-BACKGROUND = pygame.image.load("img.png")                                   # Carica il background
+BACKGROUND = pygame.image.load("img.png")                           # Carica il background
 FONT = pygame.font.SysFont("Arial", 80, bold=True)                  # Imposta il font
 
 def mainMenu() -> None:                                             # Funzione per il Menu Principale
     while True:
-        SCREEN.blit(BACKGROUND, (0, 0))                                     # Imposta il background
+        SCREEN.blit(BACKGROUND, (0, 0))                             # Imposta il background
 
         MOUSE_POS = pygame.mouse.get_pos()                          # Posizione del mouse
 
