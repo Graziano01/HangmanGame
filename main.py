@@ -7,7 +7,7 @@ pygame.init()                                                                   
 SCREEN = pygame.display.set_mode((1280, 720))                                                                       # Main Menu
 pygame.display.set_caption("Hangman Game")                                                                          # Titolo della finestra
 
-BACKGROUND = pygame.image.load("img.png")                                                                           # Carica il background
+BACKGROUND = pygame.image.load("assets/img.png")                                                                    # Carica il background
 FONT = pygame.font.SysFont("Arial", 80, bold=True)                                                                  # Imposta il font
 LANGUAGE = "ENG"
 
@@ -147,19 +147,19 @@ def mainMenuEng() -> None:                                                      
 
         MOUSE_POS = pygame.mouse.get_pos()                                                                          # Posizione del mouse
 
-        PLAY_BUT = Button(image=pygame.image.load("rect.png"),                                                      # Bottone per giocare
+        PLAY_BUT = Button(image=pygame.image.load("assets/rect.png"),                                               # Bottone per giocare
                     pos=(1050, 80), text_input="PLAY", font=FONT,
                     base_color="black", hovering_color="red")
 
-        STATS_BUT = Button(image=pygame.image.load("rect.png"),                                                     # Bottone per le statistiche
+        STATS_BUT = Button(image=pygame.image.load("assets/rect.png"),                                              # Bottone per le statistiche
                     pos=(1050, 190), text_input="STATS", font=FONT,
                     base_color="black", hovering_color="red")
 
-        QUIT_BUT = Button(image=pygame.image.load("rect.png"),                                                      # Bottone per uscire dal gioco
+        QUIT_BUT = Button(image=pygame.image.load("assets/rect.png"),                                               # Bottone per uscire dal gioco
                     pos=(1050, 300), text_input="QUIT", font=FONT, 
                     base_color="black", hovering_color="red")
 
-        ITA_BUT = Button(image=pygame.image.load("ita.png"),
+        ITA_BUT = Button(image=pygame.image.load("assets/ita.png"),
                     pos=(40, 40), text_input="", font=FONT,
                     base_color="black", hovering_color="red")
 
@@ -197,19 +197,19 @@ def mainMenuIta() -> None:                                                      
 
         MOUSE_POS = pygame.mouse.get_pos()                                                                          # Posizione del mouse
 
-        PLAY_BUT = Button(image=pygame.image.load("rect.png"),                                                      # Bottone per giocare
+        PLAY_BUT = Button(image=pygame.image.load("assets/rect.png"),                                               # Bottone per giocare
                     pos=(1010, 80), text_input="GIOCA", font=FONT,
                     base_color="black", hovering_color="red")
 
-        STATS_BUT = Button(image=pygame.image.load("rect.png"),                                                     # Bottone per le statistiche
+        STATS_BUT = Button(image=pygame.image.load("assets/rect.png"),                                              # Bottone per le statistiche
                     pos=(1010, 190), text_input="STATISTICHE", font=FONT,
                     base_color="black", hovering_color="red")
 
-        QUIT_BUT = Button(image=pygame.image.load("rect.png"),                                                      # Bottone per uscire dal gioco
+        QUIT_BUT = Button(image=pygame.image.load("assets/rect.png"),                                               # Bottone per uscire dal gioco
                     pos=(1010, 300), text_input="ESCI", font=FONT, 
                     base_color="black", hovering_color="red")
 
-        ENG_BUT = Button(image=pygame.image.load("eng.png"),
+        ENG_BUT = Button(image=pygame.image.load("assets/eng.png"),
                     pos=(40, 40), text_input="", font=FONT,
                     base_color="black", hovering_color="red")
 
