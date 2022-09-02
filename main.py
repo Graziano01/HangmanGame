@@ -2,30 +2,31 @@ import pygame, sys, random
 import sqlite3
 from button import Button
 
-pygame.init()                                                       # Inizializza la finestra
+pygame.init()                                                                                                       # Inizializza la finestra
 
-SCREEN = pygame.display.set_mode((1280, 720))                       # Main Menu
-pygame.display.set_caption("Hangman Game")                          # Titolo della finestra
+SCREEN = pygame.display.set_mode((1280, 720))                                                                       # Main Menu
+pygame.display.set_caption("Hangman Game")                                                                          # Titolo della finestra
 
-BACKGROUND = pygame.image.load("img.png")                           # Carica il background
-FONT = pygame.font.SysFont("Arial", 80, bold=True)                  # Imposta il font
+BACKGROUND = pygame.image.load("img.png")                                                                           # Carica il background
+FONT = pygame.font.SysFont("Arial", 80, bold=True)                                                                  # Imposta il font
 
 """
 Database
 """
-CONNECT = sqlite3.connect("hangman.db")                             # Connessione al database
+CONNECT = sqlite3.connect("hangman.db")                                                                             # Connessione al database
 CURSOR = CONNECT.cursor()
-CURSOR.execute("CREATE TABLE IF NOT EXISTS stats (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT, score INTEGER)") # Crea la tabella stats se non esiste
+Q = "CREATE TABLE IF NOT EXISTS stats (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT, score INTEGER)"
+CURSOR.execute(Q)                                                                                                   # Crea la tabella stats se non esiste
 
-def selectWord() -> str:                                            # Funzione per selezionare una parola
+def selectWord() -> str:                                                                                            # Funzione per selezionare una parola random
     WORDS = []
-    with open("wordlist.txt") as f:
+    with open("wordlist.txt") as f:                                                                                 # Apre il file wordlist.txt
         for line in f:
-            WORD = line.rstrip("\n")
-            WORDS.append(WORD)
-    RAND_WORD = random.choice(WORDS)
+            WORD = line.rstrip("\n")                                                                                # Rimuove il carattere di fine riga
+            WORDS.append(WORD)                                                                                      # Aggiunge la parola alla lista
+    RAND_WORD = random.choice(WORDS)                                                                                # Seleziona una parola random
 
-def playMenu() -> None:                                             # Funzione per il Menu di Gioco
+def playMenu() -> None:                                                                                             # Funzione per il Menu di Gioco
     while True:
         SCREEN.fill("black")
 
@@ -35,7 +36,7 @@ def playMenu() -> None:                                             # Funzione p
         PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 260))
         SCREEN.blit(PLAY_TEXT, PLAY_RECT)
 
-        PLAY_BACK = Button(image=None, pos=(640, 460),              # Bottone per tornare al menu principale
+        PLAY_BACK = Button(image=None, pos=(640, 460),                                                              # Bottone per tornare al menu principale
                             text_input="BACK", font=FONT, 
                             base_color="white", 
                             hovering_color="green")
@@ -43,7 +44,7 @@ def playMenu() -> None:                                             # Funzione p
         PLAY_BACK.changeColor(PLAY_MOUSE_POS)
         PLAY_BACK.update(SCREEN)
 
-        for event in pygame.event.get():                            # Eventi
+        for event in pygame.event.get():                                                                            # Eventi
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
@@ -53,7 +54,7 @@ def playMenu() -> None:                                             # Funzione p
 
         pygame.display.update()
 
-def statsMenu() -> None:                                            # Funzione per il Menu delle Statistiche
+def statsMenu() -> None:                                                                                            # Funzione per il Menu delle Statistiche
     while True:
         SCREEN.fill("black")
 
@@ -63,7 +64,7 @@ def statsMenu() -> None:                                            # Funzione p
         STATS_RECT = STATS_TEXT.get_rect(center=(640, 260))
         SCREEN.blit(STATS_TEXT, STATS_RECT)
 
-        STATS_BACK = Button(image=None, pos=(640, 460),             # Bottone per tornare al menu principale
+        STATS_BACK = Button(image=None, pos=(640, 460),                                                             # Bottone per tornare al menu principale
                             text_input="BACK", font=FONT,
                             base_color="white", 
                             hovering_color="green")
@@ -71,7 +72,7 @@ def statsMenu() -> None:                                            # Funzione p
         STATS_BACK.changeColor(STATS_MOUSE_POS)
         STATS_BACK.update(SCREEN)
 
-        for event in pygame.event.get():                            # Eventi
+        for event in pygame.event.get():                                                                            # Eventi
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
@@ -81,42 +82,42 @@ def statsMenu() -> None:                                            # Funzione p
         
         pygame.display.update()
 
-def mainMenu() -> None:                                             # Funzione per il Menu Principale
+def mainMenu() -> None:                                                                                             # Funzione per il Menu Principale
     while True:
-        SCREEN.blit(BACKGROUND, (0, 0))                             # Imposta il background
+        SCREEN.blit(BACKGROUND, (0, 0))                                                                             # Imposta il background
 
-        MOUSE_POS = pygame.mouse.get_pos()                          # Posizione del mouse
+        MOUSE_POS = pygame.mouse.get_pos()                                                                          # Posizione del mouse
 
-        PLAY_BUT = Button(image=pygame.image.load("rect.png"),      # Bottone per giocare
+        PLAY_BUT = Button(image=pygame.image.load("rect.png"),                                                      # Bottone per giocare
                     pos=(1050, 80), text_input="PLAY", font=FONT,
                     base_color="black", hovering_color="red")
 
-        STATS_BUT = Button(image=pygame.image.load("rect.png"),     # Bottone per le statistiche
+        STATS_BUT = Button(image=pygame.image.load("rect.png"),                                                     # Bottone per le statistiche
                     pos=(1050, 190), text_input="STATS", font=FONT,
                     base_color="black", hovering_color="red")
 
-        QUIT_BUT = Button(image=pygame.image.load("rect.png"),      # Bottone per uscire dal gioco
+        QUIT_BUT = Button(image=pygame.image.load("rect.png"),                                                      # Bottone per uscire dal gioco
                     pos=(1050, 300), text_input="QUIT", font=FONT, 
                     base_color="black", hovering_color="red")
 
         for button in [PLAY_BUT, STATS_BUT, QUIT_BUT]:                                   
-            button.changeColor(MOUSE_POS)                           # Cambia il colore del bottone
-            button.update(SCREEN)                                   # Aggiorna il bottone
+            button.changeColor(MOUSE_POS)                                                                           # Cambia il colore del bottone
+            button.update(SCREEN)                                                                                   # Aggiorna il bottone
 
-        for event in pygame.event.get():                            # Eventi
-            if event.type == pygame.QUIT:                           # Se si preme il tasto X chiude la finestra
+        for event in pygame.event.get():                                                                            # Eventi
+            if event.type == pygame.QUIT:                                                                           # Se si preme il tasto X chiude la finestra
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:                
                 if QUIT_BUT.checkForInput(MOUSE_POS):               
                     pygame.quit()
-                    sys.exit()                                      # Se si preme il bottone QUIT chiude la finestra
+                    sys.exit()                                                                                      # Se si preme il bottone QUIT chiude la finestra
                 if STATS_BUT.checkForInput(MOUSE_POS):
-                    statsMenu()                                     # Se si preme il bottone STATS apre il menu delle statistiche
+                    statsMenu()                                                                                     # Se si preme il bottone STATS apre il menu delle statistiche
                 if PLAY_BUT.checkForInput(MOUSE_POS):
-                    playMenu()                                      # Se si preme il bottone PLAY apre il menu di gioco
+                    playMenu()                                                                                      # Se si preme il bottone PLAY apre il menu di gioco
 
-        pygame.display.update()                                     # Aggiorna lo schermo
+        pygame.display.update()                                                                                     # Aggiorna lo schermo
 
-if __name__ == "__main__":
+if __name__ == "__main__":  
     mainMenu()
