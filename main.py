@@ -22,7 +22,7 @@ def connectDB() -> None:                                                        
 
 def selectWord() -> str:                                                                                            # Funzione per selezionare una parola random
     WORDS = []
-    with open("wordlist.txt") as f:                                                                                 # Apre il file wordlist.txt
+    with open("assets/wordlist.txt") as f:                                                                          # Apre il file wordlist.txt
         for line in f:
             WORD = line.rstrip("\n")                                                                                # Rimuove il carattere di fine riga
             WORDS.append(WORD)                                                                                      # Aggiunge la parola alla lista
