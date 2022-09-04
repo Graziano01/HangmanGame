@@ -4,16 +4,12 @@ from button import Button
 
 pygame.init()                                                                                                       # Inizializza la finestra
 
-SCREEN = pygame.display.set_mode((1280, 720))                                                                       # Main Menu
+SCREEN = pygame.display.set_mode((1280, 720))                                                                       # Main screen
 pygame.display.set_caption("Hangman Game")                                                                          # Titolo della finestra
 
 BACKGROUND = pygame.image.load("assets/img.png")                                                                    # Carica il background
 FONT = pygame.font.SysFont("Arial", 80, bold=True)                                                                  # Imposta il font
-LANGUAGE = "ENG"
 
-"""
-Database
-"""
 def connectDB() -> None:                                                                                            # Funzione per connettersi al database
     CONNECT = sqlite3.connect("hangman.db")                                                                         # Connessione al database
     CURSOR = CONNECT.cursor()
@@ -27,6 +23,7 @@ def selectWord() -> str:                                                        
             WORD = line.rstrip("\n")                                                                                # Rimuove il carattere di fine riga
             WORDS.append(WORD)                                                                                      # Aggiunge la parola alla lista
     RAND_WORD = random.choice(WORDS)                                                                                # Seleziona una parola random
+    return RAND_WORD                                                                                                # Ritorna la parola random
 
 def playMenuEng() -> None:                                                                                          # Funzione per il Menu di Gioco Inglese
     while True:
@@ -147,7 +144,7 @@ def mainMenuEng() -> None:                                                      
 
         MOUSE_POS = pygame.mouse.get_pos()                                                                          # Posizione del mouse
 
-        PLAY_BUT = Button(image=pygame.image.load("assets/rect.png"),                                               # Bottone per giocare
+        PLAY_BUT = Button(image=pygame.image.load("assets/rect2.png"),                                              # Bottone per giocare
                     pos=(1050, 80), text_input="PLAY", font=FONT,
                     base_color="black", hovering_color="red")
 
@@ -155,7 +152,7 @@ def mainMenuEng() -> None:                                                      
                     pos=(1050, 190), text_input="STATS", font=FONT,
                     base_color="black", hovering_color="red")
 
-        QUIT_BUT = Button(image=pygame.image.load("assets/rect.png"),                                               # Bottone per uscire dal gioco
+        QUIT_BUT = Button(image=pygame.image.load("assets/rect2.png"),                                              # Bottone per uscire dal gioco
                     pos=(1050, 300), text_input="QUIT", font=FONT, 
                     base_color="black", hovering_color="red")
 
@@ -176,15 +173,9 @@ def mainMenuEng() -> None:                                                      
                     pygame.quit()
                     sys.exit()                                                                                      # Se si preme il bottone QUIT chiude la finestra
                 if STATS_BUT.checkForInput(MOUSE_POS):
-                    if LANGUAGE == "ENG":
-                        statsMenuEng()                                                                              # Se si preme il bottone STATS apre il menu delle statistiche
-                    elif LANGUAGE == "ITA":
-                        statsMenuIta()
-                if PLAY_BUT.checkForInput(MOUSE_POS):
-                    if LANGUAGE == "ENG":    
-                        playMenuEng()                                                                               # Se si preme il bottone PLAY apre il menu di gioco
-                    elif LANGUAGE == "ITA":
-                        playMenuIta()
+                    statsMenuEng()                                                                                  # Se si preme il bottone STATS apre il menu delle statistiche
+                if PLAY_BUT.checkForInput(MOUSE_POS):   
+                    playMenuEng()                                                                                   # Se si preme il bottone PLAY apre il menu di gioco
                 if ITA_BUT.checkForInput(MOUSE_POS):
                     mainMenuIta()
 
@@ -197,15 +188,15 @@ def mainMenuIta() -> None:                                                      
 
         MOUSE_POS = pygame.mouse.get_pos()                                                                          # Posizione del mouse
 
-        PLAY_BUT = Button(image=pygame.image.load("assets/rect.png"),                                               # Bottone per giocare
+        PLAY_BUT = Button(image=pygame.image.load("assets/rect2.png"),                                              # Bottone per giocare
                     pos=(1010, 80), text_input="GIOCA", font=FONT,
                     base_color="black", hovering_color="red")
 
-        STATS_BUT = Button(image=pygame.image.load("assets/rect.png"),                                              # Bottone per le statistiche
+        STATS_BUT = Button(image=pygame.image.load("assets/rect1.png"),                                             # Bottone per le statistiche
                     pos=(1010, 190), text_input="STATISTICHE", font=FONT,
                     base_color="black", hovering_color="red")
 
-        QUIT_BUT = Button(image=pygame.image.load("assets/rect.png"),                                               # Bottone per uscire dal gioco
+        QUIT_BUT = Button(image=pygame.image.load("assets/rect2.png"),                                              # Bottone per uscire dal gioco
                     pos=(1010, 300), text_input="ESCI", font=FONT, 
                     base_color="black", hovering_color="red")
 
@@ -226,15 +217,9 @@ def mainMenuIta() -> None:                                                      
                     pygame.quit()
                     sys.exit()                                                                                      # Se si preme il bottone QUIT chiude la finestra
                 if STATS_BUT.checkForInput(MOUSE_POS):
-                    if LANGUAGE == "ITA":
-                        statsMenuIta()                                                                              # Se si preme il bottone STATS apre il menu delle statistiche
-                    elif LANGUAGE == "ENG":
-                        statsMenuEng()
+                    statsMenuIta()                                                                                  # Se si preme il bottone STATS apre il menu delle statistiche
                 if PLAY_BUT.checkForInput(MOUSE_POS):
-                    if LANGUAGE == "ITA":    
-                        playMenuIta()                                                                               # Se si preme il bottone PLAY apre il menu di gioco
-                    elif LANGUAGE == "ENG":
-                        playMenuEng()
+                    playMenuIta()                                                                                   # Se si preme il bottone PLAY apre il menu di gioco
                 if ENG_BUT.checkForInput(MOUSE_POS):
                     mainMenuEng()
 
