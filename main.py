@@ -23,7 +23,8 @@ def selectWord() -> str:                                                        
             WORD = line.rstrip("\n")                                                                                # Rimuove il carattere di fine riga
             WORDS.append(WORD)                                                                                      # Aggiunge la parola alla lista
     RAND_WORD = random.choice(WORDS)                                                                                # Seleziona una parola random
-    return RAND_WORD                                                                                                # Ritorna la parola random
+    RAND_WORD_LEN = len(RAND_WORD)                                                                                  # Calcola la lunghezza della parola
+    return RAND_WORD, RAND_WORD_LEN                                                                                 # Ritorna la parola random e la sua lunghezza
 
 def playMenuEng() -> None:                                                                                          # Funzione per il Menu di Gioco Inglese
     while True:
@@ -31,17 +32,31 @@ def playMenuEng() -> None:                                                      
 
         PLAY_MOUSE_POS = pygame.mouse.get_pos()
 
-        PLAY_TEXT = FONT.render("PLAY SCREEN", True, "white")
-        PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 260))
+        PLAY_TEXT = FONT.render("SELECT THE DIFFICULTY", True, "orange")                                            # Testo selezione difficolta'
+        PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 100))
         SCREEN.blit(PLAY_TEXT, PLAY_RECT)
 
-        PLAY_BACK = Button(image=None, pos=(640, 460),                                                              # Bottone per tornare al menu principale
+        EASY_BUT = Button(image=None, pos=(640, 250),                                                               # Bottone partita facile
+                            text_input="EASY", font=FONT,
+                            base_color="white",
+                            hovering_color="red")
+        MEDIUM_BUT = Button(image=None, pos=(640,360),                                                              # Bottone partita media
+                            text_input="MEDIUM", font=FONT,
+                            base_color="white",
+                            hovering_color="red")
+        HARD_BUT = Button(image=None, pos=(640, 470),                                                               # Bottone partita difficile
+                            text_input="HARD", font=FONT,
+                            base_color="white",
+                            hovering_color="red")
+
+        PLAY_BACK = Button(image=None, pos=(140, 650),                                                              # Bottone per tornare al menu principale
                             text_input="BACK", font=FONT, 
                             base_color="white", 
                             hovering_color="green")
 
-        PLAY_BACK.changeColor(PLAY_MOUSE_POS)
-        PLAY_BACK.update(SCREEN)
+        for button in [EASY_BUT, MEDIUM_BUT, HARD_BUT, PLAY_BACK]:
+            button.changeColor(PLAY_MOUSE_POS)
+            button.update(SCREEN)
 
         for event in pygame.event.get():                                                                            # Eventi
             if event.type == pygame.QUIT:
@@ -50,6 +65,12 @@ def playMenuEng() -> None:                                                      
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
                     mainMenuEng()
+                #if EASY_BUT.checkForInput(PLAY_MOUSE_POS):
+                    #funzione easy
+                #if MEDIUM_BUT.checkForInput(PLAY_MOUSE_POS):
+                    #funzione med
+                #if HARD_BUT.checkForInput(PLAY_MOUSE_POS):
+                    #funzione hard
 
         pygame.display.update()
 
@@ -59,17 +80,31 @@ def playMenuIta() -> None:                                                      
 
         PLAY_MOUSE_POS = pygame.mouse.get_pos()
 
-        PLAY_TEXT = FONT.render("SCHERMO DI GIOCO", True, "white")
-        PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 260))
+        PLAY_TEXT = FONT.render("SELEZIONA LA DIFFICOLTA'", True, "orange")                                         # Testo selezione difficoltà
+        PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 100))
         SCREEN.blit(PLAY_TEXT, PLAY_RECT)
 
-        PLAY_BACK = Button(image=None, pos=(640, 460),                                                              # Bottone per tornare al menu principale
+        PLAY_BACK = Button(image=None, pos=(230, 650),                                                              # Bottone per tornare al menu principale
                             text_input="INDIETRO", font=FONT, 
                             base_color="white", 
                             hovering_color="green")
 
-        PLAY_BACK.changeColor(PLAY_MOUSE_POS)
-        PLAY_BACK.update(SCREEN)
+        EASY_BUT = Button(image=None, pos=(640, 250),                                                               # Bottone partita facile
+                            text_input="FACILE", font=FONT,
+                            base_color="white",
+                            hovering_color="red")
+        MEDIUM_BUT = Button(image=None, pos=(640,360),                                                              # Bottone partita media
+                            text_input="MEDIO", font=FONT,
+                            base_color="white",
+                            hovering_color="red")
+        HARD_BUT = Button(image=None, pos=(640, 470),                                                               # Bottone partita difficile
+                            text_input="DIFFICILE", font=FONT,
+                            base_color="white",
+                            hovering_color="red")
+
+        for button in [EASY_BUT, MEDIUM_BUT, HARD_BUT, PLAY_BACK]:
+            button.changeColor(PLAY_MOUSE_POS)
+            button.update(SCREEN)
 
         for event in pygame.event.get():                                                                            # Eventi
             if event.type == pygame.QUIT:
@@ -78,6 +113,12 @@ def playMenuIta() -> None:                                                      
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
                     mainMenuIta()
+                #if EASY_BUT.checkForInput(PLAY_MOUSE_POS):
+                    #funzione easy
+                #if MEDIUM_BUT.checkForInput(PLAY_MOUSE_POS):
+                    #funzione med
+                #if HARD_BUT.checkForInput(PLAY_MOUSE_POS):
+                    #funzione hard
 
         pygame.display.update()
 
@@ -139,7 +180,6 @@ def statsMenuIta() -> None:                                                     
 
 def mainMenuEng() -> None:                                                                                          # Funzione per il Menu Principale
     while True:
-        LANGUAGE = "ENG"
         SCREEN.blit(BACKGROUND, (0, 0))                                                                             # Imposta il background
 
         MOUSE_POS = pygame.mouse.get_pos()                                                                          # Posizione del mouse
@@ -183,7 +223,6 @@ def mainMenuEng() -> None:                                                      
 
 def mainMenuIta() -> None:                                                                                          # Funzione per il Menu Principale
     while True:
-        LANGUAGE = "ITA"
         SCREEN.blit(BACKGROUND, (0, 0))                                                                             # Imposta il background
 
         MOUSE_POS = pygame.mouse.get_pos()                                                                          # Posizione del mouse
