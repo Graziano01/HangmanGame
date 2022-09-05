@@ -12,19 +12,9 @@ FONT = pygame.font.SysFont("Arial", 80, bold=True)                              
 
 def connectDB() -> None:                                                                                            # Funzione per connettersi al database
     CONNECT = sqlite3.connect("hangman.db")                                                                         # Connessione al database
-    CURSOR = CONNECT.cursor()
-    Q = "CREATE TABLE IF NOT EXISTS stats (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT, score INTEGER)"
-    CURSOR.execute(Q)                                                                                               # Crea la tabella stats se non esiste
-
-def selectWord() -> str:                                                                                            # Funzione per selezionare una parola random
-    WORDS = []
-    with open("assets/wordlist.txt") as f:                                                                          # Apre il file wordlist.txt
-        for line in f:
-            WORD = line.rstrip("\n")                                                                                # Rimuove il carattere di fine riga
-            WORDS.append(WORD)                                                                                      # Aggiunge la parola alla lista
-    RAND_WORD = random.choice(WORDS)                                                                                # Seleziona una parola random
-    RAND_WORD_LEN = len(RAND_WORD)                                                                                  # Calcola la lunghezza della parola
-    return RAND_WORD, RAND_WORD_LEN                                                                                 # Ritorna la parola random e la sua lunghezza
+    CURSOR = CONNECT.cursor()                                                                                       # Cursore per eseguire le query
+    Q = "CREATE TABLE IF NOT EXISTS stats (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT, score INTEGER)"# Query
+    CURSOR.execute(Q)                                                                                               # Esegui la query
 
 def playMenuEng() -> None:                                                                                          # Funzione per il Menu di Gioco Inglese
     while True:
@@ -65,12 +55,12 @@ def playMenuEng() -> None:                                                      
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
                     mainMenuEng()
-                #if EASY_BUT.checkForInput(PLAY_MOUSE_POS):
-                    #funzione easy
-                #if MEDIUM_BUT.checkForInput(PLAY_MOUSE_POS):
-                    #funzione med
-                #if HARD_BUT.checkForInput(PLAY_MOUSE_POS):
-                    #funzione hard
+                if EASY_BUT.checkForInput(PLAY_MOUSE_POS):
+                    easyGameEng()
+                if MEDIUM_BUT.checkForInput(PLAY_MOUSE_POS):
+                    medGameEng()
+                if HARD_BUT.checkForInput(PLAY_MOUSE_POS):
+                    hardGameEng()
 
         pygame.display.update()
 
@@ -113,12 +103,12 @@ def playMenuIta() -> None:                                                      
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
                     mainMenuIta()
-                #if EASY_BUT.checkForInput(PLAY_MOUSE_POS):
-                    #funzione easy
-                #if MEDIUM_BUT.checkForInput(PLAY_MOUSE_POS):
-                    #funzione med
-                #if HARD_BUT.checkForInput(PLAY_MOUSE_POS):
-                    #funzione hard
+                if EASY_BUT.checkForInput(PLAY_MOUSE_POS):
+                    easyGameIta()
+                if MEDIUM_BUT.checkForInput(PLAY_MOUSE_POS):
+                    medGameIta()
+                if HARD_BUT.checkForInput(PLAY_MOUSE_POS):
+                    hardGameIta()
 
         pygame.display.update()
 
@@ -177,6 +167,208 @@ def statsMenuIta() -> None:                                                     
                     mainMenuIta()
         
         pygame.display.update()
+
+def easyGameEng() -> None:
+    WORDS = []
+    with open("assets/wordlistengCorte.txt", "r") as f:
+        for line in f:
+            WORD = line.rstrip("\n")
+            WORDS.append(WORD)
+        RAND_WORD = random.choice(WORDS)
+        RAND_WORD_LEN = len(RAND_WORD)
+    print(RAND_WORD)
+    
+    while True:
+        SCREEN.fill("white")
+
+        GAME_MOUSE_POS = pygame.mouse.get_pos()
+
+        COUNTER = 0
+        SPACE = 10
+
+        while COUNTER < RAND_WORD_LEN:
+            HIDDEN = FONT.render("_", True, "black")
+            HIDDEN_RECT = HIDDEN.get_rect()
+            HIDDEN_RECT.center = (((500) + SPACE), (300))
+            SCREEN.blit(HIDDEN, HIDDEN_RECT)
+            SPACE += 60
+            COUNTER += 1
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+        pygame.display.update()
+
+def medGameEng() -> None:
+    WORDS = []
+    with open("assets/wordlistengMedie.txt", "r") as f:
+        for line in f:
+            WORD = line.rstrip("\n")
+            WORDS.append(WORD)
+        RAND_WORD = random.choice(WORDS)
+        RAND_WORD_LEN = len(RAND_WORD)
+    print(RAND_WORD)
+    
+    while True:
+        SCREEN.fill("white")
+
+        GAME_MOUSE_POS = pygame.mouse.get_pos()
+
+        COUNTER = 0
+        SPACE = 10
+
+        while COUNTER < RAND_WORD_LEN:
+            HIDDEN = FONT.render("_", True, "black")
+            HIDDEN_RECT = HIDDEN.get_rect()
+            HIDDEN_RECT.center = (((500) + SPACE), (300))
+            SCREEN.blit(HIDDEN, HIDDEN_RECT)
+            SPACE += 60
+            COUNTER += 1
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+        pygame.display.update()
+
+
+def hardGameEng() -> None:
+    WORDS = []
+    with open("assets/wordlistengLunghe.txt", "r") as f:
+        for line in f:
+            WORD = line.rstrip("\n")
+            WORDS.append(WORD)
+        RAND_WORD = random.choice(WORDS)
+        RAND_WORD_LEN = len(RAND_WORD)
+    print(RAND_WORD)
+    
+    while True:
+        SCREEN.fill("white")
+
+        GAME_MOUSE_POS = pygame.mouse.get_pos()
+
+        COUNTER = 0
+        SPACE = 10
+
+        while COUNTER < RAND_WORD_LEN:
+            HIDDEN = FONT.render("_", True, "black")
+            HIDDEN_RECT = HIDDEN.get_rect()
+            HIDDEN_RECT.center = (((500) + SPACE), (300))
+            SCREEN.blit(HIDDEN, HIDDEN_RECT)
+            SPACE += 60
+            COUNTER += 1
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+        pygame.display.update()
+
+
+def easyGameIta() -> None:
+    WORDS = []
+    with open("assets/wordlistitaCorte.txt", "r") as f:
+        for line in f:
+            WORD = line.rstrip("\n")
+            WORDS.append(WORD)
+        RAND_WORD = random.choice(WORDS)
+        RAND_WORD_LEN = len(RAND_WORD)
+    print(RAND_WORD)
+    
+    while True:
+        SCREEN.fill("white")
+
+        GAME_MOUSE_POS = pygame.mouse.get_pos()
+
+        COUNTER = 0
+        SPACE = 10
+
+        while COUNTER < RAND_WORD_LEN:
+            HIDDEN = FONT.render("_", True, "black")
+            HIDDEN_RECT = HIDDEN.get_rect()
+            HIDDEN_RECT.center = (((500) + SPACE), (300))
+            SCREEN.blit(HIDDEN, HIDDEN_RECT)
+            SPACE += 60
+            COUNTER += 1
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+        pygame.display.update()
+
+def medGameIta() -> None:
+    WORDS = []
+    with open("assets/wordlistitaMedie.txt", "r") as f:
+        for line in f:
+            WORD = line.rstrip("\n")
+            WORDS.append(WORD)
+        RAND_WORD = random.choice(WORDS)
+        RAND_WORD_LEN = len(RAND_WORD)
+    print(RAND_WORD)
+    
+    while True:
+        SCREEN.fill("white")
+
+        GAME_MOUSE_POS = pygame.mouse.get_pos()
+
+        COUNTER = 0
+        SPACE = 10
+
+        while COUNTER < RAND_WORD_LEN:
+            HIDDEN = FONT.render("_", True, "black")
+            HIDDEN_RECT = HIDDEN.get_rect()
+            HIDDEN_RECT.center = (((500) + SPACE), (300))
+            SCREEN.blit(HIDDEN, HIDDEN_RECT)
+            SPACE += 60
+            COUNTER += 1
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+        pygame.display.update()
+
+
+def hardGameIta() -> None:
+    WORDS = []
+    with open("assets/wordlistitaLunghe.txt", "r") as f:
+        for line in f:
+            WORD = line.rstrip("\n")
+            WORDS.append(WORD)
+        RAND_WORD = random.choice(WORDS)
+        RAND_WORD_LEN = len(RAND_WORD)
+    print(RAND_WORD)
+    
+    while True:
+        SCREEN.fill("white")
+
+        GAME_MOUSE_POS = pygame.mouse.get_pos()
+
+        COUNTER = 0
+        SPACE = 10
+
+        while COUNTER < RAND_WORD_LEN:
+            HIDDEN = FONT.render("_", True, "black")
+            HIDDEN_RECT = HIDDEN.get_rect()
+            HIDDEN_RECT.center = (((500) + SPACE), (300))
+            SCREEN.blit(HIDDEN, HIDDEN_RECT)
+            SPACE += 60
+            COUNTER += 1
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+        pygame.display.update()
+
 
 def mainMenuEng() -> None:                                                                                          # Funzione per il Menu Principale
     while True:
