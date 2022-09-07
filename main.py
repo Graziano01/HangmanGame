@@ -170,11 +170,11 @@ def statsMenuIta() -> None:                                                     
 
 def easyGameEng() -> None:
     WORDS = []
-    with open("assets/wordlistengCorte.txt", "r") as f:
+    with open("assets/wordlistengCorte.txt", "r") as f:                                                             # Apertura file con le parole
         for line in f:
-            WORD = line.rstrip("\n")
-            WORDS.append(WORD)
-        RAND_WORD = random.choice(WORDS)
+            WORD = line.rstrip("\n")                                                                                
+            WORDS.append(WORD)                                                                                      # Aggiunta delle parole alla lista
+        RAND_WORD = random.choice(WORDS)                                                                            # Scelta di una parola a caso dalla lista
         RAND_WORD_LEN = len(RAND_WORD)
     print(RAND_WORD)
     
@@ -186,10 +186,10 @@ def easyGameEng() -> None:
         COUNTER = 0
         SPACE = 10
 
-        while COUNTER < RAND_WORD_LEN:
+        while COUNTER < RAND_WORD_LEN:                                                                              # Ciclo per stampare le lettere nascote della parola
             HIDDEN = FONT.render("_", True, "black")
             HIDDEN_RECT = HIDDEN.get_rect()
-            HIDDEN_RECT.center = (((500) + SPACE), (300))
+            HIDDEN_RECT.center = (((500) + SPACE), (300))                                                           # Posizione delle lettere nascoste
             SCREEN.blit(HIDDEN, HIDDEN_RECT)
             SPACE += 60
             COUNTER += 1
