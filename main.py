@@ -10,11 +10,118 @@ pygame.display.set_caption("Hangman Game")                                      
 BACKGROUND = pygame.image.load("assets/img.png")                                                                    # Carica il background
 FONT = pygame.font.SysFont("Arial", 80, bold=True)                                                                  # Imposta il font
 
-def connectDB() -> None:                                                                                            # Funzione per connettersi al database
+global DB_NAME, DB_SCORE
+global CONNECT, CURSOR
+
+def connectDB(DB_NAME, DB_SCORE) -> None:                                                                           # Funzione per connettersi al database
     CONNECT = sqlite3.connect("hangman.db")                                                                         # Connessione al database
     CURSOR = CONNECT.cursor()                                                                                       # Cursore per eseguire le query
-    Q = "CREATE TABLE IF NOT EXISTS stats (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT, score INTEGER)"# Query
+    Q = "CREATE TABLE IF NOT EXISTS stats (name TEXT, score INTEGER)"                                               # Query
     CURSOR.execute(Q)                                                                                               # Esegui la query
+    Q2 = "INSERT INTO stats (name, score) VALUES (?, ?)"
+    TUPLA = (DB_NAME, DB_SCORE)
+    CURSOR.execute(Q2, TUPLA)
+    CONNECT.commit()                                                                                                # Salva le modifiche
+
+def getNameEng():
+    USER_TEXT = ""
+    INPUT_RECT = pygame.Rect(520, 250, 250, 40)
+    NAME_FONT = pygame.font.SysFont("Arial", 30, bold=True)
+    COUNTER = 0
+    while True:
+        SCREEN.fill("white")
+
+        MOUSE_POS = pygame.mouse.get_pos()
+
+        NAME_TEXT = FONT.render("INSERT YOUR NAME", True, "black")
+        NAME_RECT = NAME_TEXT.get_rect(center=(640, 100))
+        SCREEN.blit(NAME_TEXT, NAME_RECT)
+
+        pygame.draw.rect(SCREEN, "black", INPUT_RECT, 2)
+        TEXT_SURF = NAME_FONT.render(USER_TEXT, True, "black")
+        TEXT_RECT = TEXT_SURF.get_rect(center=(INPUT_RECT.centerx, INPUT_RECT.centery))
+        SCREEN.blit(TEXT_SURF, TEXT_RECT)
+
+        ENTER_BUT = Button(image=pygame.image.load("assets/rect2.png"),
+                            pos=(850, 270),                                                               
+                            text_input="ENTER", font=NAME_FONT,
+                            base_color="black",
+                            hovering_color="red")
+
+        for botton in [ENTER_BUT]:
+            botton.changeColor(MOUSE_POS)
+            botton.update(SCREEN)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_BACKSPACE:
+                    USER_TEXT = USER_TEXT[:-1]
+                else:
+                    USER_TEXT += event.unicode
+                    COUNTER += 1
+                    if COUNTER > 14:
+                        break
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if ENTER_BUT.checkForInput(MOUSE_POS):
+                    DB_NAME = USER_TEXT
+                    DB_SCORE = 0
+                    connectDB(DB_NAME, DB_SCORE)
+                    playMenuEng()
+
+        pygame.display.update()
+
+def getNameIta():
+    USER_TEXT = ""
+    INPUT_RECT = pygame.Rect(520, 250, 250, 40)
+    NAME_FONT = pygame.font.SysFont("Arial", 30, bold=True)
+    COUNTER = 0
+    while True:
+        SCREEN.fill("white")
+
+        MOUSE_POS = pygame.mouse.get_pos()
+
+        NAME_TEXT = FONT.render("INSERISCI IL TUO NOME", True, "black")
+        NAME_RECT = NAME_TEXT.get_rect(center=(640, 100))
+        SCREEN.blit(NAME_TEXT, NAME_RECT)
+
+        pygame.draw.rect(SCREEN, "black", INPUT_RECT, 2)
+        TEXT_SURF = NAME_FONT.render(USER_TEXT, True, "black")
+        TEXT_RECT = TEXT_SURF.get_rect(center=(INPUT_RECT.centerx, INPUT_RECT.centery))
+        SCREEN.blit(TEXT_SURF, TEXT_RECT)
+
+        ENTER_BUT = Button(image=pygame.image.load("assets/rect2.png"),
+                            pos=(850, 270),                                                               
+                            text_input="INVIO", font=NAME_FONT,
+                            base_color="black",
+                            hovering_color="red")
+
+        for botton in [ENTER_BUT]:
+            botton.changeColor(MOUSE_POS)
+            botton.update(SCREEN)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_BACKSPACE:
+                    USER_TEXT = USER_TEXT[:-1]
+                else:
+                    USER_TEXT += event.unicode
+                    COUNTER += 1
+                    if COUNTER > 14:
+                        break
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if ENTER_BUT.checkForInput(MOUSE_POS):
+                    DB_NAME = USER_TEXT
+                    DB_SCORE = 0
+                    connectDB(DB_NAME, DB_SCORE)
+                    playMenuEng()
+
+        pygame.display.update()
 
 def playMenuEng() -> None:                                                                                          # Funzione per il Menu di Gioco Inglese
     while True:
@@ -407,7 +514,7 @@ def mainMenuEng() -> None:                                                      
                 if STATS_BUT.checkForInput(MOUSE_POS):
                     statsMenuEng()                                                                                  # Se si preme il bottone STATS apre il menu delle statistiche
                 if PLAY_BUT.checkForInput(MOUSE_POS):   
-                    playMenuEng()                                                                                   # Se si preme il bottone PLAY apre il menu di gioco
+                    getNameEng()                                                                                    # Se si preme il bottone PLAY apre il menu di gioco
                 if ITA_BUT.checkForInput(MOUSE_POS):
                     mainMenuIta()
 
@@ -450,7 +557,7 @@ def mainMenuIta() -> None:                                                      
                 if STATS_BUT.checkForInput(MOUSE_POS):
                     statsMenuIta()                                                                                  # Se si preme il bottone STATS apre il menu delle statistiche
                 if PLAY_BUT.checkForInput(MOUSE_POS):
-                    playMenuIta()                                                                                   # Se si preme il bottone PLAY apre il menu di gioco
+                    getNameIta()                                                                                    # Se si preme il bottone PLAY apre il menu di gioco
                 if ENG_BUT.checkForInput(MOUSE_POS):
                     mainMenuEng()
 
