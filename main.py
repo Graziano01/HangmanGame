@@ -13,11 +13,14 @@ FONT = pygame.font.SysFont("Arial", 80, bold=True)                              
 global DB_NAME, DB_SCORE
 global CONNECT, CURSOR
 
-def connectDB(DB_NAME, DB_SCORE) -> None:                                                                           # Funzione per connettersi al database
+c = sqlite3.connect("hangman.db")
+cu = c.cursor()
+cu.execute("CREATE TABLE IF NOT EXISTS stats (name TEXT, score INTEGER)")
+c.commit()
+
+def insertDB(DB_NAME, DB_SCORE) -> None:                                                                           # Funzione per connettersi al database
     CONNECT = sqlite3.connect("hangman.db")                                                                         # Connessione al database
     CURSOR = CONNECT.cursor()                                                                                       # Cursore per eseguire le query
-    Q = "CREATE TABLE IF NOT EXISTS stats (name TEXT, score INTEGER)"                                               # Query
-    CURSOR.execute(Q)                                                                                               # Esegui la query
     Q2 = "INSERT INTO stats (name, score) VALUES (?, ?)"
     TUPLA = (DB_NAME, DB_SCORE)
     CURSOR.execute(Q2, TUPLA)
@@ -68,7 +71,7 @@ def getNameEng():
                 if ENTER_BUT.checkForInput(MOUSE_POS):
                     DB_NAME = USER_TEXT
                     DB_SCORE = 0
-                    connectDB(DB_NAME, DB_SCORE)
+                    insertDB(DB_NAME, DB_SCORE)
                     playMenuEng()
 
         pygame.display.update()
@@ -118,7 +121,7 @@ def getNameIta():
                 if ENTER_BUT.checkForInput(MOUSE_POS):
                     DB_NAME = USER_TEXT
                     DB_SCORE = 0
-                    connectDB(DB_NAME, DB_SCORE)
+                    insertDB(DB_NAME, DB_SCORE)
                     playMenuEng()
 
         pygame.display.update()
