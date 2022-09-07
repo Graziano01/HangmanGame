@@ -18,12 +18,14 @@ cu = c.cursor()
 cu.execute("CREATE TABLE IF NOT EXISTS stats (name TEXT, score INTEGER)")
 c.commit()
 
-def insertDB(DB_NAME, DB_SCORE) -> None:                                                                           # Funzione per connettersi al database
+# Problema: quando si aggiornerà lo score a fine partita, verrà resettato a 0 quando si inserisce nuovamente lo stesso nome
+# Problema: nomi ripetuti nella tabella
+def insertDB(DB_NAME, DB_SCORE) -> None:                                                                            # Funzione per inserire valori nel database
     CONNECT = sqlite3.connect("hangman.db")                                                                         # Connessione al database
     CURSOR = CONNECT.cursor()                                                                                       # Cursore per eseguire le query
-    Q2 = "INSERT INTO stats (name, score) VALUES (?, ?)"
-    TUPLA = (DB_NAME, DB_SCORE)
-    CURSOR.execute(Q2, TUPLA)
+    Q2 = "INSERT INTO stats (name, score) VALUES (?, ?)"                                                            # Query per inserire i valori
+    TUPLA = (DB_NAME, DB_SCORE)                                                                                     # Tupla con i valori da inserire
+    CURSOR.execute(Q2, TUPLA)                                                                                       # Esecuzione della query
     CONNECT.commit()                                                                                                # Salva le modifiche
 
 def getNameEng():
