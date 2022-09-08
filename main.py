@@ -9,6 +9,7 @@ pygame.display.set_caption("Hangman Game")                                      
 
 BACKGROUND = pygame.image.load("assets/img.png")                                                                    # Carica il background
 FONT = pygame.font.SysFont("Arial", 80, bold=True)                                                                  # Imposta il font
+UNDERSCORE_FONT = pygame.font.SysFont("Arial", 60, bold=True)                                                       # Imposta il font per l'underscore
 
 def connectDB() -> None:                                                                                            # Funzione per connettersi al database
     CONNECT = sqlite3.connect("hangman.db")                                                                         # Connessione al database
@@ -187,12 +188,14 @@ def easyGameEng() -> None:
         SPACE = 10
 
         while COUNTER < RAND_WORD_LEN:                                                                              # Ciclo per stampare le lettere nascote della parola
-            HIDDEN = FONT.render("_", True, "black")
+            HIDDEN = UNDERSCORE_FONT.render("_", True, "black")
             HIDDEN_RECT = HIDDEN.get_rect()
-            HIDDEN_RECT.center = (((500) + SPACE), (300))                                                           # Posizione delle lettere nascoste
+            HIDDEN_RECT.center = (((50) + SPACE), (150))                                                           # Posizione delle lettere nascoste
             SCREEN.blit(HIDDEN, HIDDEN_RECT)
-            SPACE += 60
+            SPACE += 50
             COUNTER += 1
+
+        pygame.draw.rect(SCREEN, "black", [50,300,550,300],2)                                                        # Rettangolo delle lettere
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -220,11 +223,11 @@ def medGameEng() -> None:
         SPACE = 10
 
         while COUNTER < RAND_WORD_LEN:
-            HIDDEN = FONT.render("_", True, "black")
+            HIDDEN = UNDERSCORE_FONT.render("_", True, "black")
             HIDDEN_RECT = HIDDEN.get_rect()
-            HIDDEN_RECT.center = (((500) + SPACE), (300))
+            HIDDEN_RECT.center = (((50) + SPACE), (150))
             SCREEN.blit(HIDDEN, HIDDEN_RECT)
-            SPACE += 60
+            SPACE += 50
             COUNTER += 1
 
         for event in pygame.event.get():
@@ -254,11 +257,11 @@ def hardGameEng() -> None:
         SPACE = 10
 
         while COUNTER < RAND_WORD_LEN:
-            HIDDEN = FONT.render("_", True, "black")
+            HIDDEN = UNDERSCORE_FONT.render("_", True, "black")
             HIDDEN_RECT = HIDDEN.get_rect()
-            HIDDEN_RECT.center = (((500) + SPACE), (300))
+            HIDDEN_RECT.center = (((50) + SPACE), (150))
             SCREEN.blit(HIDDEN, HIDDEN_RECT)
-            SPACE += 60
+            SPACE += 50
             COUNTER += 1
 
         for event in pygame.event.get():
@@ -288,11 +291,11 @@ def easyGameIta() -> None:
         SPACE = 10
 
         while COUNTER < RAND_WORD_LEN:
-            HIDDEN = FONT.render("_", True, "black")
+            HIDDEN = UNDERSCORE_FONT.render("_", True, "black")
             HIDDEN_RECT = HIDDEN.get_rect()
-            HIDDEN_RECT.center = (((500) + SPACE), (300))
+            HIDDEN_RECT.center = (((50) + SPACE), (150))
             SCREEN.blit(HIDDEN, HIDDEN_RECT)
-            SPACE += 60
+            SPACE += 50
             COUNTER += 1
 
         for event in pygame.event.get():
@@ -321,11 +324,11 @@ def medGameIta() -> None:
         SPACE = 10
 
         while COUNTER < RAND_WORD_LEN:
-            HIDDEN = FONT.render("_", True, "black")
+            HIDDEN = UNDERSCORE_FONT.render("_", True, "black")
             HIDDEN_RECT = HIDDEN.get_rect()
-            HIDDEN_RECT.center = (((500) + SPACE), (300))
+            HIDDEN_RECT.center = (((50) + SPACE), (150))
             SCREEN.blit(HIDDEN, HIDDEN_RECT)
-            SPACE += 60
+            SPACE += 50
             COUNTER += 1
 
         for event in pygame.event.get():
@@ -355,11 +358,11 @@ def hardGameIta() -> None:
         SPACE = 10
 
         while COUNTER < RAND_WORD_LEN:
-            HIDDEN = FONT.render("_", True, "black")
+            HIDDEN = UNDERSCORE_FONT.render("_", True, "black")
             HIDDEN_RECT = HIDDEN.get_rect()
-            HIDDEN_RECT.center = (((500) + SPACE), (300))
+            HIDDEN_RECT.center = (((50) + SPACE), (150))
             SCREEN.blit(HIDDEN, HIDDEN_RECT)
-            SPACE += 60
+            SPACE += 50
             COUNTER += 1
 
         for event in pygame.event.get():
