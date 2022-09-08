@@ -10,9 +10,6 @@ pygame.display.set_caption("Hangman Game")                                      
 BACKGROUND = pygame.image.load("assets/img.png")                                                                    # Carica il background
 FONT = pygame.font.SysFont("Arial", 80, bold=True)                                                                  # Imposta il font
 
-global DB_NAME, DB_SCORE
-global CONNECT, CURSOR
-
 c = sqlite3.connect("hangman.db")
 cu = c.cursor()
 cu.execute("CREATE TABLE IF NOT EXISTS stats (name TEXT, score INTEGER)")
@@ -23,9 +20,9 @@ c.commit()
 def insertDB(DB_NAME, DB_SCORE) -> None:                                                                            # Funzione per inserire valori nel database
     CONNECT = sqlite3.connect("hangman.db")                                                                         # Connessione al database
     CURSOR = CONNECT.cursor()                                                                                       # Cursore per eseguire le query
-    Q2 = "INSERT INTO stats (name, score) VALUES (?, ?)"                                                            # Query per inserire i valori
+    Q = "INSERT INTO stats (name, score) VALUES (?, ?)"                                                             # Query per inserire i valori
     TUPLA = (DB_NAME, DB_SCORE)                                                                                     # Tupla con i valori da inserire
-    CURSOR.execute(Q2, TUPLA)                                                                                       # Esecuzione della query
+    CURSOR.execute(Q, TUPLA)                                                                                        # Esecuzione della query
     CONNECT.commit()                                                                                                # Salva le modifiche
 
 def getNameEng():
@@ -65,9 +62,9 @@ def getNameEng():
                 if event.key == pygame.K_BACKSPACE:
                     USER_TEXT = USER_TEXT[:-1]
                 else:
-                    USER_TEXT += event.unicode
                     COUNTER += 1
-                    if COUNTER > 14:
+                    USER_TEXT += event.unicode
+                    if COUNTER == 14:
                         break
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if ENTER_BUT.checkForInput(MOUSE_POS):
