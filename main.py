@@ -18,7 +18,7 @@ c.commit()
 
 # Problema: quando si aggiornerà lo score a fine partita, verrà resettato a 0 quando si inserisce nuovamente lo stesso nome
 # Problema: nomi ripetuti nella tabella
-def insertDB(DB_NAME, DB_SCORE) -> None:                                                                            # Funzione per inserire valori nel database
+def insertDB(DB_NAME: str, DB_SCORE: int) -> None:                                                                  # Funzione per inserire valori nel database
     CONNECT = sqlite3.connect("hangman.db")                                                                         # Connessione al database
     CURSOR = CONNECT.cursor()                                                                                       # Cursore per eseguire le query
     Q = "INSERT INTO stats (name, score) VALUES (?, ?)"                                                             # Query per inserire i valori
@@ -76,7 +76,7 @@ def getNameEng():
 
         pygame.display.update()
 
-def getNameIta():
+def getNameIta() -> None:
     USER_TEXT = ""
     INPUT_RECT = pygame.Rect(520, 250, 250, 40)
     NAME_FONT = pygame.font.SysFont("Arial", 30, bold=True)
