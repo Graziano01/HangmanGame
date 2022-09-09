@@ -18,7 +18,7 @@ c.commit()
 
 # Problema: quando si aggiornerà lo score a fine partita, verrà resettato a 0 quando si inserisce nuovamente lo stesso nome
 # Problema: nomi ripetuti nella tabella
-def insert_db(DB_NAME: str, DB_SCORE: int) -> None:                                                                  # Funzione per inserire valori nel database
+def insert_db(DB_NAME: str, DB_SCORE: int) -> None:                                                                 # Funzione per inserire valori nel database
     CONNECT = sqlite3.connect("hangman.db")                                                                         # Connessione al database
     CURSOR = CONNECT.cursor()                                                                                       # Cursore per eseguire le query
     Q = "INSERT INTO stats (name, score) VALUES (?, ?)"                                                             # Query per inserire i valori
@@ -26,7 +26,23 @@ def insert_db(DB_NAME: str, DB_SCORE: int) -> None:                             
     CURSOR.execute(Q, TUPLA)                                                                                        # Esecuzione della query
     CONNECT.commit()                                                                                                # Salva le modifiche
 
-def get_name_eng():
+def select_name_db() -> str:
+    CONNECT = sqlite3.connect("hangman.db")
+    CURSOR = CONNECT.cursor()
+    Q = "SELECT name FROM stats"
+    CURSOR.execute(Q)
+    DATA = CURSOR.fetchall()
+    return DATA
+
+def select_score_db() -> int:
+    CONNECT = sqlite3.connect("hangman.db")
+    CURSOR = CONNECT.cursor()
+    Q = "SELECT score FROM stats"
+    CURSOR.execute(Q)
+    DATA = CURSOR.fetchall()
+    return DATA
+
+def game_over_eng():
     USER_TEXT = ""
     INPUT_RECT = pygame.Rect(520, 250, 250, 40)
     NAME_FONT = pygame.font.SysFont("Arial", 30, bold=True)
@@ -76,7 +92,7 @@ def get_name_eng():
 
         pygame.display.update()
 
-def get_name_ita() -> None:
+def game_over_ita() -> None:
     USER_TEXT = ""
     INPUT_RECT = pygame.Rect(520, 250, 250, 40)
     NAME_FONT = pygame.font.SysFont("Arial", 30, bold=True)
@@ -126,7 +142,7 @@ def get_name_ita() -> None:
 
         pygame.display.update()
 
-def play_menu_eng() -> None:                                                                                          # Funzione per il Menu di Gioco Inglese
+def play_menu_eng() -> None:                                                                                        # Funzione per il Menu di Gioco Inglese
     while True:
         SCREEN.fill("black")
 
@@ -222,7 +238,11 @@ def play_menu_ita() -> None:                                                    
 
         pygame.display.update()
 
-def stats_menu_eng() -> None:                                                                                         # Funzione per il Menu delle Statistiche
+def stats_menu_eng() -> None:                                                                                       # Funzione per il Menu delle Statistiche Inglese   
+    blacklist = ["()[],'"]
+    DB_TEXT = select_name_db()
+    for letter in blacklist:
+        DB_TEXT = DB_TEXT.replace(letter, "")
     while True:
         SCREEN.fill("black")
 
@@ -232,7 +252,11 @@ def stats_menu_eng() -> None:                                                   
         STATS_RECT = STATS_TEXT.get_rect(center=(640, 260))
         SCREEN.blit(STATS_TEXT, STATS_RECT)
 
-        STATS_BACK = Button(image=None, pos=(640, 460),                                                             # Bottone per tornare al menu principale
+        DB_TEXT = FONT.render(str(DB_TEXT), True, "white")
+        DB_RECT = DB_TEXT.get_rect(center=(640, 400))
+        SCREEN.blit(DB_TEXT, DB_RECT)
+
+        STATS_BACK = Button(image=None, pos=(150, 600),                                                             # Bottone per tornare al menu principale
                             text_input="BACK", font=FONT,
                             base_color="white", 
                             hovering_color="green")
@@ -560,9 +584,9 @@ def main_menu_ita() -> None:                                                    
                     pygame.quit()
                     sys.exit()                                                                                      # Se si preme il bottone QUIT chiude la finestra
                 if STATS_BUT.checkForInput(MOUSE_POS):
-                    stats_menu_ita()                                                                                  # Se si preme il bottone STATS apre il menu delle statistiche
+                    stats_menu_ita()                                                                                # Se si preme il bottone STATS apre il menu delle statistiche
                 if PLAY_BUT.checkForInput(MOUSE_POS):
-                    play_menu_ita()                                                                                    # Se si preme il bottone PLAY apre il menu di gioco
+                    play_menu_ita()                                                                                 # Se si preme il bottone PLAY apre il menu di gioco
                 if ENG_BUT.checkForInput(MOUSE_POS):
                     main_menu_eng()
 
