@@ -4,12 +4,12 @@ from button import Button
 
 pygame.init()                                                                                                       # Inizializza la finestra
 
-SCREEN = pygame.display.set_mode((1280, 720))                                                                       # Main screen
+screen = pygame.display.set_mode((1280, 720))                                                                       # Main screen
 pygame.display.set_caption("Hangman Game")                                                                          # Titolo della finestra
 
-BACKGROUND = pygame.image.load("assets/img.png")                                                                    # Carica il background
-FONT = pygame.font.SysFont("Arial", 80, bold=True)                                                                  # Imposta il font
-UNDERSCORE_FONT = pygame.font.SysFont("Arial", 60, bold=True)                                                       # Imposta il font per l'underscore
+background = pygame.image.load("assets/img.png")                                                                    # Carica il background
+font = pygame.font.SysFont("Arial", 80, bold=True)                                                                  # Imposta il font
+underscore_font = pygame.font.SysFont("Arial", 60, bold=True)                                                       # Imposta il font per l'underscore
 
 c = sqlite3.connect("hangman.db")
 cu = c.cursor()
@@ -18,317 +18,317 @@ c.commit()
 
 # Problema: quando si aggiornerà lo score a fine partita, verrà resettato a 0 quando si inserisce nuovamente lo stesso nome
 # Problema: nomi ripetuti nella tabella
-def insert_db(DB_NAME: str, DB_SCORE: int) -> None:                                                                 # Funzione per inserire valori nel database
-    CONNECT = sqlite3.connect("hangman.db")                                                                         # Connessione al database
-    CURSOR = CONNECT.cursor()                                                                                       # Cursore per eseguire le query
-    Q = "INSERT INTO stats (name, score) VALUES (?, ?)"                                                             # Query per inserire i valori
-    TUPLA = (DB_NAME, DB_SCORE)                                                                                     # Tupla con i valori da inserire
-    CURSOR.execute(Q, TUPLA)                                                                                        # Esecuzione della query
-    CONNECT.commit()                                                                                                # Salva le modifiche
+def insert_db(db_name: str, db_score: int) -> None:                                                                 # Funzione per inserire valori nel database
+    connect = sqlite3.connect("hangman.db")                                                                         # Connessione al database
+    cursor = connect.cursor()                                                                                       # cursore per eseguire le query
+    q = "INSERT INTO stats (name, score) VALUES (?, ?)"                                                             # query per inserire i valori
+    tupla = (db_name, db_score)                                                                                     # tupla con i valori da inserire
+    cursor.execute(q, tupla)                                                                                        # Esecuzione della query
+    connect.commit()                                                                                                # Salva le modifiche
 
 def select_name_db() -> str:
-    CONNECT = sqlite3.connect("hangman.db")
-    CURSOR = CONNECT.cursor()
-    Q = "SELECT name FROM stats"
-    CURSOR.execute(Q)
-    DATA = CURSOR.fetchall()
-    return DATA
+    connect = sqlite3.connect("hangman.db")
+    cursor = connect.cursor()
+    q = "SELECT name FROM stats"
+    cursor.execute(q)
+    data = cursor.fetchall()
+    return data
 
 def select_score_db() -> int:
-    CONNECT = sqlite3.connect("hangman.db")
-    CURSOR = CONNECT.cursor()
-    Q = "SELECT score FROM stats"
-    CURSOR.execute(Q)
-    DATA = CURSOR.fetchall()
-    return DATA
+    connect = sqlite3.connect("hangman.db")
+    cursor = connect.cursor()
+    q = "SELECT score FROM stats"
+    cursor.execute(q)
+    data = cursor.fetchall()
+    return data
 
 def game_over_eng():
-    USER_TEXT = ""
-    INPUT_RECT = pygame.Rect(520, 250, 250, 40)
-    NAME_FONT = pygame.font.SysFont("Arial", 30, bold=True)
-    COUNTER = 0
+    user_text = ""
+    input_rect = pygame.Rect(520, 250, 250, 40)
+    name_font = pygame.font.SysFont("Arial", 30, bold=True)
+    counter = 0
     while True:
-        SCREEN.fill("white")
+        screen.fill("white")
 
-        MOUSE_POS = pygame.mouse.get_pos()
+        mouse_pos = pygame.mouse.get_pos()
 
-        NAME_TEXT = FONT.render("INSERT YOUR NAME", True, "black")
-        NAME_RECT = NAME_TEXT.get_rect(center=(640, 100))
-        SCREEN.blit(NAME_TEXT, NAME_RECT)
+        name_text = font.render("INSERT YOUR NAME", True, "black")
+        name_rect = name_text.get_rect(center=(640, 100))
+        screen.blit(name_text, name_rect)
 
-        pygame.draw.rect(SCREEN, "black", INPUT_RECT, 2)
-        TEXT_SURF = NAME_FONT.render(USER_TEXT, True, "black")
-        TEXT_RECT = TEXT_SURF.get_rect(center=(INPUT_RECT.centerx, INPUT_RECT.centery))
-        SCREEN.blit(TEXT_SURF, TEXT_RECT)
+        pygame.draw.rect(screen, "black", input_rect, 2)
+        text_surf = name_font.render(user_text, True, "black")
+        text_rect = text_surf.get_rect(center=(input_rect.centerx, input_rect.centery))
+        screen.blit(text_surf, text_rect)
 
-        ENTER_BUT = Button(image=pygame.image.load("assets/rect2.png"),
+        enter_but = Button(image=pygame.image.load("assets/rect2.png"),
                             pos=(850, 270),                                                               
-                            text_input="ENTER", font=NAME_FONT,
+                            text_input="ENTER", font=name_font,
                             base_color="black",
                             hovering_color="red")
 
-        for botton in [ENTER_BUT]:
-            botton.changeColor(MOUSE_POS)
-            botton.update(SCREEN)
+        for botton in [enter_but]:
+            botton.changeColor(mouse_pos)
+            botton.update(screen)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_BACKSPACE:
-                    USER_TEXT = USER_TEXT[:-1]
+                if event.key == pygame.K_backspace:
+                    user_text = user_text[:-1]
                 else:
-                    COUNTER += 1
-                    USER_TEXT += event.unicode
-                    if COUNTER == 14:
+                    counter += 1
+                    user_text += event.unicode
+                    if counter == 14:
                         break
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if ENTER_BUT.checkForInput(MOUSE_POS):
-                    DB_NAME = USER_TEXT
-                    DB_SCORE = 0
-                    insert_db(DB_NAME, DB_SCORE)
+            if event.type == pygame.mousebottondown:
+                if enter_but.checkForInput(mouse_pos):
+                    db_name = user_text
+                    db_score = 0
+                    insert_db(db_name, db_score)
                     play_menu_eng()
 
         pygame.display.update()
 
 def game_over_ita() -> None:
-    USER_TEXT = ""
-    INPUT_RECT = pygame.Rect(520, 250, 250, 40)
-    NAME_FONT = pygame.font.SysFont("Arial", 30, bold=True)
-    COUNTER = 0
+    user_text = ""
+    input_rect = pygame.Rect(520, 250, 250, 40)
+    name_font = pygame.font.SysFont("Arial", 30, bold=True)
+    counter = 0
     while True:
-        SCREEN.fill("white")
+        screen.fill("white")
 
-        MOUSE_POS = pygame.mouse.get_pos()
+        mouse_pos = pygame.mouse.get_pos()
 
-        NAME_TEXT = FONT.render("INSERISCI IL TUO NOME", True, "black")
-        NAME_RECT = NAME_TEXT.get_rect(center=(640, 100))
-        SCREEN.blit(NAME_TEXT, NAME_RECT)
+        name_text = font.render("INSERISCI IL TUO NOME", True, "black")
+        name_rect = name_text.get_rect(center=(640, 100))
+        screen.blit(name_text, name_rect)
 
-        pygame.draw.rect(SCREEN, "black", INPUT_RECT, 2)
-        TEXT_SURF = NAME_FONT.render(USER_TEXT, True, "black")
-        TEXT_RECT = TEXT_SURF.get_rect(center=(INPUT_RECT.centerx, INPUT_RECT.centery))
-        SCREEN.blit(TEXT_SURF, TEXT_RECT)
+        pygame.draw.rect(screen, "black", input_rect, 2)
+        text_surf = name_font.render(user_text, True, "black")
+        text_rect = text_surf.get_rect(center=(input_rect.centerx, input_rect.centery))
+        screen.blit(text_surf, text_rect)
 
-        ENTER_BUT = Button(image=pygame.image.load("assets/rect2.png"),
+        enter_but = Button(image=pygame.image.load("assets/rect2.png"),
                             pos=(850, 270),                                                               
-                            text_input="INVIO", font=NAME_FONT,
+                            text_input="INVIO", font=name_font,
                             base_color="black",
                             hovering_color="red")
 
-        for botton in [ENTER_BUT]:
-            botton.changeColor(MOUSE_POS)
-            botton.update(SCREEN)
+        for botton in [enter_but]:
+            botton.changeColor(mouse_pos)
+            botton.update(screen)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_BACKSPACE:
-                    USER_TEXT = USER_TEXT[:-1]
+                if event.key == pygame.K_BACKspace:
+                    user_text = user_text[:-1]
                 else:
-                    USER_TEXT += event.unicode
-                    COUNTER += 1
-                    if COUNTER > 14:
+                    user_text += event.unicode
+                    counter += 1
+                    if counter > 14:
                         break
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if ENTER_BUT.checkForInput(MOUSE_POS):
-                    DB_NAME = USER_TEXT
-                    DB_SCORE = 0
-                    insert_db(DB_NAME, DB_SCORE)
+            if event.type == pygame.mousebottondown:
+                if enter_but.checkForInput(mouse_pos):
+                    db_name = user_text
+                    db_score = 0
+                    insert_db(db_name, db_score)
                     play_menu_eng()
 
         pygame.display.update()
 
 def play_menu_eng() -> None:                                                                                        # Funzione per il Menu di Gioco Inglese
     while True:
-        SCREEN.fill("black")
+        screen.fill("black")
 
-        PLAY_MOUSE_POS = pygame.mouse.get_pos()
+        play_mouse_pos = pygame.mouse.get_pos()
 
-        PLAY_TEXT = FONT.render("SELECT THE DIFFICULTY", True, "orange")                                            # Testo selezione difficolta'
-        PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 100))
-        SCREEN.blit(PLAY_TEXT, PLAY_RECT)
+        play = font.render("SELECT THE DIFFICULTY", True, "orange")                                                 # Testo selezione difficolta'
+        play_rect = play.get_rect(center=(640, 100))
+        screen.blit(play, play_rect)
 
-        EASY_BUT = Button(image=None, pos=(640, 250),                                                               # Bottone partita facile
-                            text_input="EASY", font=FONT,
+        easy_but = Button(image=None, pos=(640, 250),                                                               # Bottone partita facile
+                            text_input="EASY", font=font,
                             base_color="white",
                             hovering_color="red")
-        MEDIUM_BUT = Button(image=None, pos=(640,360),                                                              # Bottone partita media
-                            text_input="MEDIUM", font=FONT,
+        medium_but = Button(image=None, pos=(640,360),                                                              # Bottone partita media
+                            text_input="MEDIUM", font=font,
                             base_color="white",
                             hovering_color="red")
-        HARD_BUT = Button(image=None, pos=(640, 470),                                                               # Bottone partita difficile
-                            text_input="HARD", font=FONT,
+        hard_but = Button(image=None, pos=(640, 470),                                                               # Bottone partita difficile
+                            text_input="HARD", font=font,
                             base_color="white",
                             hovering_color="red")
 
-        PLAY_BACK = Button(image=None, pos=(140, 650),                                                              # Bottone per tornare al menu principale
-                            text_input="BACK", font=FONT, 
+        play_back = Button(image=None, pos=(140, 650),                                                              # Bottone per tornare al menu principale
+                            text_input="BACK", font=font, 
                             base_color="white", 
                             hovering_color="green")
 
-        for button in [EASY_BUT, MEDIUM_BUT, HARD_BUT, PLAY_BACK]:
-            button.changeColor(PLAY_MOUSE_POS)
-            button.update(SCREEN)
+        for button in [easy_but, medium_but, hard_but, play_back]:
+            button.changeColor(play_mouse_pos)
+            button.update(screen)
 
-        for event in pygame.event.get():                                                                            # Eventi
+        for event in pygame.event.get():                                                                             # Eventi
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
+            if event.type == pygame.mousebottondown:
+                if play_back.checkForInput(play_mouse_pos):
                     main_menu_eng()
-                if EASY_BUT.checkForInput(PLAY_MOUSE_POS):
+                if easy_but.checkForInput(play_mouse_pos):
                     easy_game_eng()
-                if MEDIUM_BUT.checkForInput(PLAY_MOUSE_POS):
+                if medium_but.checkForInput(play_mouse_pos):
                     med_game_eng()
-                if HARD_BUT.checkForInput(PLAY_MOUSE_POS):
+                if hard_but.checkForInput(play_mouse_pos):
                     hard_game_eng()
 
         pygame.display.update()
 
 def play_menu_ita() -> None:                                                                                          # Funzione per il Menu di Gioco Italiano
     while True:
-        SCREEN.fill("black")
+        screen.fill("black")
 
-        PLAY_MOUSE_POS = pygame.mouse.get_pos()
+        play_mouse_pos = pygame.mouse.get_pos()
 
-        PLAY_TEXT = FONT.render("SELEZIONA LA DIFFICOLTA'", True, "orange")                                         # Testo selezione difficoltà
-        PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 100))
-        SCREEN.blit(PLAY_TEXT, PLAY_RECT)
+        play = font.render("SELEZIONA LA DIFFICOLTA'", True, "orange")                                                # Testo selezione difficoltà
+        play_rect = play.get_rect(center=(640, 100))
+        screen.blit(play, play_rect)
 
-        PLAY_BACK = Button(image=None, pos=(230, 650),                                                              # Bottone per tornare al menu principale
-                            text_input="INDIETRO", font=FONT, 
+        play_back = Button(image=None, pos=(230, 650),                                                                # Bottone per tornare al menu principale
+                            text_input="INDIETRO", font=font, 
                             base_color="white", 
                             hovering_color="green")
 
-        EASY_BUT = Button(image=None, pos=(640, 250),                                                               # Bottone partita facile
-                            text_input="FACILE", font=FONT,
+        easy_but = Button(image=None, pos=(640, 250),                                                                 # Bottone partita facile
+                            text_input="FACILE", font=font,
                             base_color="white",
                             hovering_color="red")
-        MEDIUM_BUT = Button(image=None, pos=(640,360),                                                              # Bottone partita media
-                            text_input="MEDIO", font=FONT,
+        medium_but = Button(image=None, pos=(640,360),                                                                # Bottone partita media
+                            text_input="MEDIO", font=font,
                             base_color="white",
                             hovering_color="red")
-        HARD_BUT = Button(image=None, pos=(640, 470),                                                               # Bottone partita difficile
-                            text_input="DIFFICILE", font=FONT,
+        hard_but = Button(image=None, pos=(640, 470),                                                                 # Bottone partita difficile
+                            text_input="DIFFICILE", font=font,
                             base_color="white",
                             hovering_color="red")
 
-        for button in [EASY_BUT, MEDIUM_BUT, HARD_BUT, PLAY_BACK]:
-            button.changeColor(PLAY_MOUSE_POS)
-            button.update(SCREEN)
+        for button in [easy_but, medium_but, hard_but, play_back]:
+            button.changeColor(play_mouse_pos)
+            button.update(screen)
 
-        for event in pygame.event.get():                                                                            # Eventi
+        for event in pygame.event.get():                                                                              # Eventi
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
+            if event.type == pygame.mousebottondown:
+                if play_back.checkForInput(play_mouse_pos):
                     main_menu_ita()
-                if EASY_BUT.checkForInput(PLAY_MOUSE_POS):
+                if easy_but.checkForInput(play_mouse_pos):
                     easy_game_ita()
-                if MEDIUM_BUT.checkForInput(PLAY_MOUSE_POS):
+                if medium_but.checkForInput(play_mouse_pos):
                     med_game_ita()
-                if HARD_BUT.checkForInput(PLAY_MOUSE_POS):
+                if hard_but.checkForInput(play_mouse_pos):
                     hard_game_ita()
 
         pygame.display.update()
 
-def stats_menu_eng() -> None:                                                                                       # Funzione per il Menu delle Statistiche Inglese   
+def stats_menu_eng() -> None:                                                                                         # Funzione per il Menu delle Statistiche Inglese   
     blacklist = ["()[],'"]
-    DB_TEXT = select_name_db()
+    db_text = select_name_db()
     for letter in blacklist:
-        DB_TEXT = DB_TEXT.replace(letter, "")
+        db_text = db_text.replace(letter, "")
     while True:
-        SCREEN.fill("black")
+        screen.fill("black")
 
-        STATS_MOUSE_POS = pygame.mouse.get_pos()
+        stats_mouse_pos = pygame.mouse.get_pos()
 
-        STATS_TEXT = FONT.render("STATS SCREEN", True, "white")
-        STATS_RECT = STATS_TEXT.get_rect(center=(640, 260))
-        SCREEN.blit(STATS_TEXT, STATS_RECT)
+        stats_text = font.render("STATS SCREEN", True, "white")
+        stats_rect = stats_text.get_rect(center=(640, 260))
+        screen.blit(stats_text, stats_rect)
 
-        DB_TEXT = FONT.render(str(DB_TEXT), True, "white")
-        DB_RECT = DB_TEXT.get_rect(center=(640, 400))
-        SCREEN.blit(DB_TEXT, DB_RECT)
+        db_text = font.render(str(db_text), True, "white")
+        db_rect = db_text.get_rect(center=(640, 400))
+        screen.blit(db_text, db_rect)
 
-        STATS_BACK = Button(image=None, pos=(150, 600),                                                             # Bottone per tornare al menu principale
-                            text_input="BACK", font=FONT,
+        stats_back = Button(image=None, pos=(150, 600),                                                              # Bottone per tornare al menu principale
+                            text_input="BACK", font=font,
                             base_color="white", 
                             hovering_color="green")
 
-        STATS_BACK.changeColor(STATS_MOUSE_POS)
-        STATS_BACK.update(SCREEN)
+        stats_back.changeColor(stats_mouse_pos)
+        stats_back.update(screen)
 
-        for event in pygame.event.get():                                                                            # Eventi
+        for event in pygame.event.get():                                                                             # Eventi
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if STATS_BACK.checkForInput(STATS_MOUSE_POS):
+            if event.type == pygame.mousebottondown:
+                if stats_back.checkForInput(stats_mouse_pos):
                     main_menu_eng()
         
         pygame.display.update()
 
-def stats_menu_ita() -> None:                                                                                         # Funzione per il Menu delle Statistiche
+def stats_menu_ita() -> None:                                                                                        # Funzione per il Menu delle Statistiche
     while True:
-        SCREEN.fill("black")
+        screen.fill("black")
 
-        STATS_MOUSE_POS = pygame.mouse.get_pos()
+        stats_mouse_pos = pygame.mouse.get_pos()
 
-        STATS_TEXT = FONT.render("SCHERMO STATISTICHE", True, "white")
-        STATS_RECT = STATS_TEXT.get_rect(center=(640, 260))
-        SCREEN.blit(STATS_TEXT, STATS_RECT)
+        stats_text = font.render("SCHERMO STATISTICHE", True, "white")
+        stats_rect = stats_text.get_rect(center=(640, 260))
+        screen.blit(stats_text, stats_rect)
 
-        STATS_BACK = Button(image=None, pos=(640, 460),                                                             # Bottone per tornare al menu principale
-                            text_input="INDIETRO", font=FONT,
+        stats_back = Button(image=None, pos=(640, 460),                                                              # Bottone per tornare al menu principale
+                            text_input="INDIETRO", font=font,
                             base_color="white", 
                             hovering_color="green")
 
-        STATS_BACK.changeColor(STATS_MOUSE_POS)
-        STATS_BACK.update(SCREEN)
+        stats_back.changeColor(stats_mouse_pos)
+        stats_back.update(screen)
 
-        for event in pygame.event.get():                                                                            # Eventi
+        for event in pygame.event.get():                                                                             # Eventi
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if STATS_BACK.checkForInput(STATS_MOUSE_POS):
+            if event.type == pygame.mousebottondown:
+                if stats_back.checkForInput(stats_mouse_pos):
                     main_menu_ita()
         
         pygame.display.update()
 
 def easy_game_eng() -> None:
-    WORDS = []
+    words = []
     with open("assets/wordlistengCorte.txt", "r") as f:                                                             # Apertura file con le parole
         for line in f:
-            WORD = line.rstrip("\n")                                                                                
-            WORDS.append(WORD)                                                                                      # Aggiunta delle parole alla lista
-        RAND_WORD = random.choice(WORDS)                                                                            # Scelta di una parola a caso dalla lista
-        RAND_WORD_LEN = len(RAND_WORD)
-    print(RAND_WORD)
+            word = line.rstrip("\n")                                                                                
+            words.append(word)                                                                                      # Aggiunta delle parole alla lista
+        rand_word = random.choice(words)                                                                            # Scelta di una parola a caso dalla lista
+        rand_word_len = len(rand_word)
+    print(rand_word)
     
     while True:
-        SCREEN.fill("white")
+        screen.fill("white")
 
-        GAME_MOUSE_POS = pygame.mouse.get_pos()
+        game_mouse_pos = pygame.mouse.get_pos()
 
-        COUNTER = 0
-        SPACE = 10
+        counter = 0
+        space = 10
 
-        while COUNTER < RAND_WORD_LEN:                                                                              # Ciclo per stampare le lettere nascote della parola
-            HIDDEN = UNDERSCORE_FONT.render("_", True, "black")
-            HIDDEN_RECT = HIDDEN.get_rect()
-            HIDDEN_RECT.center = (((50) + SPACE), (150))                                                            # Posizione delle lettere nascoste
-            SCREEN.blit(HIDDEN, HIDDEN_RECT)
-            SPACE += 50
-            COUNTER += 1
+        while counter < rand_word_len:                                                                              # Ciclo per stampare le lettere nascote della parola
+            hidden = underscore_font.render("_", True, "black")
+            hidden_rect = hidden.get_rect()
+            hidden_rect.center = (((50) + space), (150))                                                            # Posizione delle lettere nascoste
+            screen.blit(hidden, hidden_rect)
+            space += 50
+            counter += 1
 
-        pygame.draw.rect(SCREEN, "black", [50,300,550,350],2)                                                        # Rettangolo delle lettere
+        pygame.draw.rect(screen, "black", [50,300,550,350],2)                                                       # Rettangolo delle lettere
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -338,30 +338,30 @@ def easy_game_eng() -> None:
         pygame.display.update()
 
 def med_game_eng() -> None:
-    WORDS = []
+    words = []
     with open("assets/wordlistengMedie.txt", "r") as f:
         for line in f:
-            WORD = line.rstrip("\n")
-            WORDS.append(WORD)
-        RAND_WORD = random.choice(WORDS)
-        RAND_WORD_LEN = len(RAND_WORD)
-    print(RAND_WORD)
+            word = line.rstrip("\n")
+            words.append(word)
+        rand_word = random.choice(words)
+        rand_word_len = len(rand_word)
+    print(rand_word)
     
     while True:
-        SCREEN.fill("white")
+        screen.fill("white")
 
-        GAME_MOUSE_POS = pygame.mouse.get_pos()
+        game_mouse_pos = pygame.mouse.get_pos()
 
-        COUNTER = 0
-        SPACE = 10
+        counter = 0
+        space = 10
 
-        while COUNTER < RAND_WORD_LEN:
-            HIDDEN = UNDERSCORE_FONT.render("_", True, "black")
-            HIDDEN_RECT = HIDDEN.get_rect()
-            HIDDEN_RECT.center = (((50) + SPACE), (150))
-            SCREEN.blit(HIDDEN, HIDDEN_RECT)
-            SPACE += 50
-            COUNTER += 1
+        while counter < rand_word_len:
+            hidden = underscore_font.render("_", True, "black")
+            hidden_rect = hidden.get_rect()
+            hidden_rect.center = (((50) + space), (150))
+            screen.blit(hidden, hidden_rect)
+            space += 50
+            counter += 1
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -372,30 +372,30 @@ def med_game_eng() -> None:
 
 
 def hard_game_eng() -> None:
-    WORDS = []
+    words = []
     with open("assets/wordlistengLunghe.txt", "r") as f:
         for line in f:
-            WORD = line.rstrip("\n")
-            WORDS.append(WORD)
-        RAND_WORD = random.choice(WORDS)
-        RAND_WORD_LEN = len(RAND_WORD)
-    print(RAND_WORD)
+            word = line.rstrip("\n")
+            words.append(word)
+        rand_word = random.choice(words)
+        rand_word_len = len(rand_word)
+    print(rand_word)
     
     while True:
-        SCREEN.fill("white")
+        screen.fill("white")
 
-        GAME_MOUSE_POS = pygame.mouse.get_pos()
+        game_mouse_pos = pygame.mouse.get_pos()
 
-        COUNTER = 0
-        SPACE = 10
+        counter = 0
+        space = 10
 
-        while COUNTER < RAND_WORD_LEN:
-            HIDDEN = UNDERSCORE_FONT.render("_", True, "black")
-            HIDDEN_RECT = HIDDEN.get_rect()
-            HIDDEN_RECT.center = (((50) + SPACE), (150))
-            SCREEN.blit(HIDDEN, HIDDEN_RECT)
-            SPACE += 50
-            COUNTER += 1
+        while counter < rand_word_len:
+            hidden = underscore_font.render("_", True, "black")
+            hidden_rect = hidden.get_rect()
+            hidden_rect.center = (((50) + space), (150))
+            screen.blit(hidden, hidden_rect)
+            space += 50
+            counter += 1
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -406,30 +406,30 @@ def hard_game_eng() -> None:
 
 
 def easy_game_ita() -> None:
-    WORDS = []
+    words = []
     with open("assets/wordlistitaCorte.txt", "r") as f:
         for line in f:
-            WORD = line.rstrip("\n")
-            WORDS.append(WORD)
-        RAND_WORD = random.choice(WORDS)
-        RAND_WORD_LEN = len(RAND_WORD)
-    print(RAND_WORD)
+            word = line.rstrip("\n")
+            words.append(word)
+        rand_word = random.choice(words)
+        rand_word_len = len(rand_word)
+    print(rand_word)
     
     while True:
-        SCREEN.fill("white")
+        screen.fill("white")
 
-        GAME_MOUSE_POS = pygame.mouse.get_pos()
+        game_mouse_pos = pygame.mouse.get_pos()
 
-        COUNTER = 0
-        SPACE = 10
+        counter = 0
+        space = 10
 
-        while COUNTER < RAND_WORD_LEN:
-            HIDDEN = UNDERSCORE_FONT.render("_", True, "black")
-            HIDDEN_RECT = HIDDEN.get_rect()
-            HIDDEN_RECT.center = (((50) + SPACE), (150))
-            SCREEN.blit(HIDDEN, HIDDEN_RECT)
-            SPACE += 50
-            COUNTER += 1
+        while counter < rand_word_len:
+            hidden = underscore_font.render("_", True, "black")
+            hidden_rect = hidden.get_rect()
+            hidden_rect.center = (((50) + space), (150))
+            screen.blit(hidden, hidden_rect)
+            space += 50
+            counter += 1
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -439,30 +439,30 @@ def easy_game_ita() -> None:
         pygame.display.update()
 
 def med_game_ita() -> None:
-    WORDS = []
+    words = []
     with open("assets/wordlistitaMedie.txt", "r") as f:
         for line in f:
-            WORD = line.rstrip("\n")
-            WORDS.append(WORD)
-        RAND_WORD = random.choice(WORDS)
-        RAND_WORD_LEN = len(RAND_WORD)
-    print(RAND_WORD)
+            word = line.rstrip("\n")
+            words.append(word)
+        rand_word = random.choice(words)
+        rand_word_len = len(rand_word)
+    print(rand_word)
     
     while True:
-        SCREEN.fill("white")
+        screen.fill("white")
 
-        GAME_MOUSE_POS = pygame.mouse.get_pos()
+        GAME_mouse_pos = pygame.mouse.get_pos()
 
-        COUNTER = 0
-        SPACE = 10
+        counter = 0
+        space = 10
 
-        while COUNTER < RAND_WORD_LEN:
-            HIDDEN = UNDERSCORE_FONT.render("_", True, "black")
-            HIDDEN_RECT = HIDDEN.get_rect()
-            HIDDEN_RECT.center = (((50) + SPACE), (150))
-            SCREEN.blit(HIDDEN, HIDDEN_RECT)
-            SPACE += 50
-            COUNTER += 1
+        while counter < rand_word_len:
+            hidden = underscore_font.render("_", True, "black")
+            hidden_rect = hidden.get_rect()
+            hidden_rect.center = (((50) + space), (150))
+            screen.blit(hidden, hidden_rect)
+            space += 50
+            counter += 1
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -473,30 +473,30 @@ def med_game_ita() -> None:
 
 
 def hard_game_ita() -> None:
-    WORDS = []
+    words = []
     with open("assets/wordlistitaLunghe.txt", "r") as f:
         for line in f:
-            WORD = line.rstrip("\n")
-            WORDS.append(WORD)
-        RAND_WORD = random.choice(WORDS)
-        RAND_WORD_LEN = len(RAND_WORD)
-    print(RAND_WORD)
+            word = line.rstrip("\n")
+            words.append(word)
+        rand_word = random.choice(words)
+        rand_word_len = len(rand_word)
+    print(rand_word)
     
     while True:
-        SCREEN.fill("white")
+        screen.fill("white")
 
-        GAME_MOUSE_POS = pygame.mouse.get_pos()
+        game_mouse_pos = pygame.mouse.get_pos()
 
-        COUNTER = 0
-        SPACE = 10
+        counter = 0
+        space = 10
 
-        while COUNTER < RAND_WORD_LEN:
-            HIDDEN = UNDERSCORE_FONT.render("_", True, "black")
-            HIDDEN_RECT = HIDDEN.get_rect()
-            HIDDEN_RECT.center = (((50) + SPACE), (150))
-            SCREEN.blit(HIDDEN, HIDDEN_RECT)
-            SPACE += 50
-            COUNTER += 1
+        while counter < rand_word_len:
+            hidden = underscore_font.render("_", True, "black")
+            hidden_rect = hidden.get_rect()
+            hidden_rect.center = (((50) + space), (150))
+            screen.blit(hidden, hidden_rect)
+            space += 50
+            counter += 1
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -508,86 +508,86 @@ def hard_game_ita() -> None:
 
 def main_menu_eng() -> None:                                                                                          # Funzione per il Menu Principale
     while True:
-        SCREEN.blit(BACKGROUND, (0, 0))                                                                             # Imposta il background
+        screen.blit(background, (0, 0))                                                                             # Imposta il background
 
-        MOUSE_POS = pygame.mouse.get_pos()                                                                          # Posizione del mouse
+        mouse_pos = pygame.mouse.get_pos()                                                                          # Posizione del mouse
 
-        PLAY_BUT = Button(image=pygame.image.load("assets/rect2.png"),                                              # Bottone per giocare
-                    pos=(1050, 80), text_input="PLAY", font=FONT,
+        play_but = Button(image=pygame.image.load("assets/rect2.png"),                                              # Bottone per giocare
+                    pos=(1050, 80), text_input="PLAY", font=font,
                     base_color="black", hovering_color="red")
 
-        STATS_BUT = Button(image=pygame.image.load("assets/rect.png"),                                              # Bottone per le statistiche
-                    pos=(1050, 190), text_input="STATS", font=FONT,
+        stats_but = Button(image=pygame.image.load("assets/rect.png"),                                              # Bottone per le statistiche
+                    pos=(1050, 190), text_input="STATS", font=font,
                     base_color="black", hovering_color="red")
 
-        QUIT_BUT = Button(image=pygame.image.load("assets/rect2.png"),                                              # Bottone per uscire dal gioco
-                    pos=(1050, 300), text_input="QUIT", font=FONT, 
+        quit_but = Button(image=pygame.image.load("assets/rect2.png"),                                              # Bottone per uscire dal gioco
+                    pos=(1050, 300), text_input="QUIT", font=font, 
                     base_color="black", hovering_color="red")
 
-        ITA_BUT = Button(image=pygame.image.load("assets/ita.png"),
-                    pos=(40, 40), text_input="", font=FONT,
+        ita_but = Button(image=pygame.image.load("assets/ita.png"),
+                    pos=(40, 40), text_input="", font=font,
                     base_color="black", hovering_color="red")
 
-        for button in [PLAY_BUT, STATS_BUT, QUIT_BUT, ITA_BUT]:                                                     # Aggiorna i bottoni
-            button.changeColor(MOUSE_POS)                                                                           # Cambia il colore del bottone
-            button.update(SCREEN)                                                                                   # Aggiorna il bottone
+        for button in [play_but, stats_but, quit_but, ita_but]:                                                     # Aggiorna i bottoni
+            button.changeColor(mouse_pos)                                                                           # Cambia il colore del bottone
+            button.update(screen)                                                                                   # Aggiorna il bottone
 
         for event in pygame.event.get():                                                                            # Eventi
             if event.type == pygame.QUIT:                                                                           # Se si preme il tasto X chiude la finestra
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:                
-                if QUIT_BUT.checkForInput(MOUSE_POS):               
+            if event.type == pygame.mousebottondown:                
+                if quit_but.checkForInput(mouse_pos):               
                     pygame.quit()
                     sys.exit()                                                                                      # Se si preme il bottone QUIT chiude la finestra
-                if STATS_BUT.checkForInput(MOUSE_POS):
+                if stats_but.checkForInput(mouse_pos):
                     stats_menu_eng()                                                                                  # Se si preme il bottone STATS apre il menu delle statistiche
-                if PLAY_BUT.checkForInput(MOUSE_POS):   
+                if play_but.checkForInput(mouse_pos):   
                     play_menu_eng()                                                                                    # Se si preme il bottone PLAY apre il menu di gioco
-                if ITA_BUT.checkForInput(MOUSE_POS):
+                if ita_but.checkForInput(mouse_pos):
                     main_menu_ita()
 
         pygame.display.update()                                                                                     # Aggiorna lo schermo
 
 def main_menu_ita() -> None:                                                                                          # Funzione per il Menu Principale
     while True:
-        SCREEN.blit(BACKGROUND, (0, 0))                                                                             # Imposta il background
+        screen.blit(background, (0, 0))                                                                             # Imposta il background
 
-        MOUSE_POS = pygame.mouse.get_pos()                                                                          # Posizione del mouse
+        mouse_pos = pygame.mouse.get_pos()                                                                          # Posizione del mouse
 
-        PLAY_BUT = Button(image=pygame.image.load("assets/rect2.png"),                                              # Bottone per giocare
-                    pos=(1010, 80), text_input="GIOCA", font=FONT,
+        play_but = Button(image=pygame.image.load("assets/rect2.png"),                                              # Bottone per giocare
+                    pos=(1010, 80), text_input="GIOCA", font=font,
                     base_color="black", hovering_color="red")
 
-        STATS_BUT = Button(image=pygame.image.load("assets/rect1.png"),                                             # Bottone per le statistiche
-                    pos=(1010, 190), text_input="STATISTICHE", font=FONT,
+        stats_but = Button(image=pygame.image.load("assets/rect1.png"),                                             # Bottone per le statistiche
+                    pos=(1010, 190), text_input="STATISTICHE", font=font,
                     base_color="black", hovering_color="red")
 
-        QUIT_BUT = Button(image=pygame.image.load("assets/rect2.png"),                                              # Bottone per uscire dal gioco
-                    pos=(1010, 300), text_input="ESCI", font=FONT, 
+        quit_but = Button(image=pygame.image.load("assets/rect2.png"),                                              # Bottone per uscire dal gioco
+                    pos=(1010, 300), text_input="ESCI", font=font, 
                     base_color="black", hovering_color="red")
 
-        ENG_BUT = Button(image=pygame.image.load("assets/eng.png"),
-                    pos=(40, 40), text_input="", font=FONT,
+        eng_but = Button(image=pygame.image.load("assets/eng.png"),
+                    pos=(40, 40), text_input="", font=font,
                     base_color="black", hovering_color="red")
 
-        for button in [PLAY_BUT, STATS_BUT, QUIT_BUT, ENG_BUT]:                                                     # Aggiorna i bottoni
-            button.changeColor(MOUSE_POS)                                                                           # Cambia il colore del bottone
-            button.update(SCREEN)                                                                                   # Aggiorna il bottone
+        for button in [play_but, stats_but, quit_but, eng_but]:                                                     # Aggiorna i bottoni
+            button.changeColor(mouse_pos)                                                                           # Cambia il colore del bottone
+            button.update(screen)                                                                                   # Aggiorna il bottone
 
         for event in pygame.event.get():                                                                            # Eventi
             if event.type == pygame.QUIT:                                                                           # Se si preme il tasto X chiude la finestra
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:                
-                if QUIT_BUT.checkForInput(MOUSE_POS):               
+            if event.type == pygame.mousebottondown:                
+                if quit_but.checkForInput(mouse_pos):               
                     pygame.quit()
                     sys.exit()                                                                                      # Se si preme il bottone QUIT chiude la finestra
-                if STATS_BUT.checkForInput(MOUSE_POS):
+                if stats_but.checkForInput(mouse_pos):
                     stats_menu_ita()                                                                                # Se si preme il bottone STATS apre il menu delle statistiche
-                if PLAY_BUT.checkForInput(MOUSE_POS):
+                if play_but.checkForInput(mouse_pos):
                     play_menu_ita()                                                                                 # Se si preme il bottone PLAY apre il menu di gioco
-                if ENG_BUT.checkForInput(MOUSE_POS):
+                if eng_but.checkForInput(mouse_pos):
                     main_menu_eng()
 
         pygame.display.update()                                                                                     # Aggiorna lo schermo
