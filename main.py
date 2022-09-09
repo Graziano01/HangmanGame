@@ -18,7 +18,7 @@ c.commit()
 
 # Problema: quando si aggiornerà lo score a fine partita, verrà resettato a 0 quando si inserisce nuovamente lo stesso nome
 # Problema: nomi ripetuti nella tabella
-def insertDB(DB_NAME: str, DB_SCORE: int) -> None:                                                                  # Funzione per inserire valori nel database
+def insert_db(DB_NAME: str, DB_SCORE: int) -> None:                                                                  # Funzione per inserire valori nel database
     CONNECT = sqlite3.connect("hangman.db")                                                                         # Connessione al database
     CURSOR = CONNECT.cursor()                                                                                       # Cursore per eseguire le query
     Q = "INSERT INTO stats (name, score) VALUES (?, ?)"                                                             # Query per inserire i valori
@@ -26,7 +26,7 @@ def insertDB(DB_NAME: str, DB_SCORE: int) -> None:                              
     CURSOR.execute(Q, TUPLA)                                                                                        # Esecuzione della query
     CONNECT.commit()                                                                                                # Salva le modifiche
 
-def getNameEng():
+def get_name_eng():
     USER_TEXT = ""
     INPUT_RECT = pygame.Rect(520, 250, 250, 40)
     NAME_FONT = pygame.font.SysFont("Arial", 30, bold=True)
@@ -71,12 +71,12 @@ def getNameEng():
                 if ENTER_BUT.checkForInput(MOUSE_POS):
                     DB_NAME = USER_TEXT
                     DB_SCORE = 0
-                    insertDB(DB_NAME, DB_SCORE)
-                    playMenuEng()
+                    insert_db(DB_NAME, DB_SCORE)
+                    play_menu_eng()
 
         pygame.display.update()
 
-def getNameIta() -> None:
+def get_name_ita() -> None:
     USER_TEXT = ""
     INPUT_RECT = pygame.Rect(520, 250, 250, 40)
     NAME_FONT = pygame.font.SysFont("Arial", 30, bold=True)
@@ -121,12 +121,12 @@ def getNameIta() -> None:
                 if ENTER_BUT.checkForInput(MOUSE_POS):
                     DB_NAME = USER_TEXT
                     DB_SCORE = 0
-                    insertDB(DB_NAME, DB_SCORE)
-                    playMenuEng()
+                    insert_db(DB_NAME, DB_SCORE)
+                    play_menu_eng()
 
         pygame.display.update()
 
-def playMenuEng() -> None:                                                                                          # Funzione per il Menu di Gioco Inglese
+def play_menu_eng() -> None:                                                                                          # Funzione per il Menu di Gioco Inglese
     while True:
         SCREEN.fill("black")
 
@@ -164,17 +164,17 @@ def playMenuEng() -> None:                                                      
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
-                    mainMenuEng()
+                    main_menu_eng()
                 if EASY_BUT.checkForInput(PLAY_MOUSE_POS):
-                    easyGameEng()
+                    easy_game_eng()
                 if MEDIUM_BUT.checkForInput(PLAY_MOUSE_POS):
-                    medGameEng()
+                    med_game_eng()
                 if HARD_BUT.checkForInput(PLAY_MOUSE_POS):
-                    hardGameEng()
+                    hard_game_eng()
 
         pygame.display.update()
 
-def playMenuIta() -> None:                                                                                          # Funzione per il Menu di Gioco Italiano
+def play_menu_ita() -> None:                                                                                          # Funzione per il Menu di Gioco Italiano
     while True:
         SCREEN.fill("black")
 
@@ -212,17 +212,17 @@ def playMenuIta() -> None:                                                      
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
-                    mainMenuIta()
+                    main_menu_ita()
                 if EASY_BUT.checkForInput(PLAY_MOUSE_POS):
-                    easyGameIta()
+                    easy_game_ita()
                 if MEDIUM_BUT.checkForInput(PLAY_MOUSE_POS):
-                    medGameIta()
+                    med_game_ita()
                 if HARD_BUT.checkForInput(PLAY_MOUSE_POS):
-                    hardGameIta()
+                    hard_game_ita()
 
         pygame.display.update()
 
-def statsMenuEng() -> None:                                                                                         # Funzione per il Menu delle Statistiche
+def stats_menu_eng() -> None:                                                                                         # Funzione per il Menu delle Statistiche
     while True:
         SCREEN.fill("black")
 
@@ -246,11 +246,11 @@ def statsMenuEng() -> None:                                                     
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if STATS_BACK.checkForInput(STATS_MOUSE_POS):
-                    mainMenuEng()
+                    main_menu_eng()
         
         pygame.display.update()
 
-def statsMenuIta() -> None:                                                                                         # Funzione per il Menu delle Statistiche
+def stats_menu_ita() -> None:                                                                                         # Funzione per il Menu delle Statistiche
     while True:
         SCREEN.fill("black")
 
@@ -274,11 +274,11 @@ def statsMenuIta() -> None:                                                     
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if STATS_BACK.checkForInput(STATS_MOUSE_POS):
-                    mainMenuIta()
+                    main_menu_ita()
         
         pygame.display.update()
 
-def easyGameEng() -> None:
+def easy_game_eng() -> None:
     WORDS = []
     with open("assets/wordlistengCorte.txt", "r") as f:                                                             # Apertura file con le parole
         for line in f:
@@ -299,12 +299,12 @@ def easyGameEng() -> None:
         while COUNTER < RAND_WORD_LEN:                                                                              # Ciclo per stampare le lettere nascote della parola
             HIDDEN = UNDERSCORE_FONT.render("_", True, "black")
             HIDDEN_RECT = HIDDEN.get_rect()
-            HIDDEN_RECT.center = (((50) + SPACE), (150))                                                           # Posizione delle lettere nascoste
+            HIDDEN_RECT.center = (((50) + SPACE), (150))                                                            # Posizione delle lettere nascoste
             SCREEN.blit(HIDDEN, HIDDEN_RECT)
             SPACE += 50
             COUNTER += 1
 
-        pygame.draw.rect(SCREEN, "black", [50,300,550,300],2)                                                        # Rettangolo delle lettere
+        pygame.draw.rect(SCREEN, "black", [50,300,550,350],2)                                                        # Rettangolo delle lettere
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -313,7 +313,7 @@ def easyGameEng() -> None:
 
         pygame.display.update()
 
-def medGameEng() -> None:
+def med_game_eng() -> None:
     WORDS = []
     with open("assets/wordlistengMedie.txt", "r") as f:
         for line in f:
@@ -347,7 +347,7 @@ def medGameEng() -> None:
         pygame.display.update()
 
 
-def hardGameEng() -> None:
+def hard_game_eng() -> None:
     WORDS = []
     with open("assets/wordlistengLunghe.txt", "r") as f:
         for line in f:
@@ -381,7 +381,7 @@ def hardGameEng() -> None:
         pygame.display.update()
 
 
-def easyGameIta() -> None:
+def easy_game_ita() -> None:
     WORDS = []
     with open("assets/wordlistitaCorte.txt", "r") as f:
         for line in f:
@@ -414,7 +414,7 @@ def easyGameIta() -> None:
 
         pygame.display.update()
 
-def medGameIta() -> None:
+def med_game_ita() -> None:
     WORDS = []
     with open("assets/wordlistitaMedie.txt", "r") as f:
         for line in f:
@@ -448,7 +448,7 @@ def medGameIta() -> None:
         pygame.display.update()
 
 
-def hardGameIta() -> None:
+def hard_game_ita() -> None:
     WORDS = []
     with open("assets/wordlistitaLunghe.txt", "r") as f:
         for line in f:
@@ -482,7 +482,7 @@ def hardGameIta() -> None:
         pygame.display.update()
 
 
-def mainMenuEng() -> None:                                                                                          # Funzione per il Menu Principale
+def main_menu_eng() -> None:                                                                                          # Funzione per il Menu Principale
     while True:
         SCREEN.blit(BACKGROUND, (0, 0))                                                                             # Imposta il background
 
@@ -517,15 +517,15 @@ def mainMenuEng() -> None:                                                      
                     pygame.quit()
                     sys.exit()                                                                                      # Se si preme il bottone QUIT chiude la finestra
                 if STATS_BUT.checkForInput(MOUSE_POS):
-                    statsMenuEng()                                                                                  # Se si preme il bottone STATS apre il menu delle statistiche
+                    stats_menu_eng()                                                                                  # Se si preme il bottone STATS apre il menu delle statistiche
                 if PLAY_BUT.checkForInput(MOUSE_POS):   
-                    getNameEng()                                                                                    # Se si preme il bottone PLAY apre il menu di gioco
+                    play_menu_eng()                                                                                    # Se si preme il bottone PLAY apre il menu di gioco
                 if ITA_BUT.checkForInput(MOUSE_POS):
-                    mainMenuIta()
+                    main_menu_ita()
 
         pygame.display.update()                                                                                     # Aggiorna lo schermo
 
-def mainMenuIta() -> None:                                                                                          # Funzione per il Menu Principale
+def main_menu_ita() -> None:                                                                                          # Funzione per il Menu Principale
     while True:
         SCREEN.blit(BACKGROUND, (0, 0))                                                                             # Imposta il background
 
@@ -560,13 +560,13 @@ def mainMenuIta() -> None:                                                      
                     pygame.quit()
                     sys.exit()                                                                                      # Se si preme il bottone QUIT chiude la finestra
                 if STATS_BUT.checkForInput(MOUSE_POS):
-                    statsMenuIta()                                                                                  # Se si preme il bottone STATS apre il menu delle statistiche
+                    stats_menu_ita()                                                                                  # Se si preme il bottone STATS apre il menu delle statistiche
                 if PLAY_BUT.checkForInput(MOUSE_POS):
-                    getNameIta()                                                                                    # Se si preme il bottone PLAY apre il menu di gioco
+                    play_menu_ita()                                                                                    # Se si preme il bottone PLAY apre il menu di gioco
                 if ENG_BUT.checkForInput(MOUSE_POS):
-                    mainMenuEng()
+                    main_menu_eng()
 
         pygame.display.update()                                                                                     # Aggiorna lo schermo
 
 if __name__ == "__main__":  
-    mainMenuEng()
+    main_menu_eng()
