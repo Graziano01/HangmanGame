@@ -238,11 +238,13 @@ def play_menu_ita() -> None:                                                    
 
         pygame.display.update()
 
-def stats_menu_eng() -> None:                                                                                         # Funzione per il Menu delle Statistiche Inglese   
-    blacklist = ["()[],'"]
-    db_text = select_name_db()
-    for letter in blacklist:
-        db_text = db_text.replace(letter, "")
+def stats_menu_eng() -> None:                                                                                       # Funzione per il Menu delle Statistiche Inglese   
+    blacklist = ['(', ')', '[', ']',',',"'"]
+    DB_TEXT = select_name_db()
+    DB_TEXT = str(DB_TEXT)
+    for char in blacklist:
+        DB_TEXT = DB_TEXT.replace(char, '')
+    print(DB_TEXT)
     while True:
         screen.fill("black")
 
@@ -255,6 +257,9 @@ def stats_menu_eng() -> None:                                                   
         db_text = font.render(str(db_text), True, "white")
         db_rect = db_text.get_rect(center=(640, 400))
         screen.blit(db_text, db_rect)
+        DB_TEXT = font.render(DB_TEXT, True, "white")
+        DB_RECT = DB_TEXT.get_rect(center=(640, 400))
+        screen.blit(DB_TEXT, DB_RECT)
 
         stats_back = Button(image=None, pos=(150, 600),                                                              # Bottone per tornare al menu principale
                             text_input="BACK", font=font,
@@ -587,6 +592,10 @@ def main_menu_ita() -> None:                                                    
                     stats_menu_ita()                                                                                # Se si preme il bottone STATS apre il menu delle statistiche
                 if play_but.checkForInput(mouse_pos):
                     play_menu_ita()                                                                                 # Se si preme il bottone PLAY apre il menu di gioco
+                if eng_but.checkForInput(mouse_pos):
+                    main_menu_eng()
+                if play_but.checkForInput(mouse_pos):
+                    game_over_ita()                                                                                 # Se si preme il bottone PLAY apre il menu di gioco
                 if eng_but.checkForInput(mouse_pos):
                     main_menu_eng()
 
