@@ -1,3 +1,4 @@
+from tkinter.tix import INTEGER
 import pygame, sys, random
 import sqlite3
 from button import Button
@@ -278,6 +279,15 @@ def statsMenuIta() -> None:                                                     
         
         pygame.display.update()
 
+def check_letter(c: str, s: str) -> list:
+    lst = []
+    for pos,char in enumerate(s):
+        if(char == c):
+            lst.append(pos)
+    print(lst)
+    return lst
+
+
 def easyGameEng() -> None:
     WORDS = []
     with open("assets/wordlistengCorte.txt", "r") as f:                                                             # Apertura file con le parole
@@ -288,6 +298,8 @@ def easyGameEng() -> None:
         RAND_WORD_LEN = len(RAND_WORD)
     print(RAND_WORD)
     
+    lst = []
+
     while True:
         SCREEN.fill("white")
 
@@ -299,12 +311,24 @@ def easyGameEng() -> None:
         while COUNTER < RAND_WORD_LEN:                                                                              # Ciclo per stampare le lettere nascote della parola
             HIDDEN = UNDERSCORE_FONT.render("_", True, "black")
             HIDDEN_RECT = HIDDEN.get_rect()
-            HIDDEN_RECT.center = (((50) + SPACE), (150))                                                           # Posizione delle lettere nascoste
+            HIDDEN_RECT.center = (((60) + SPACE), (150))                                                           # Posizione delle lettere nascoste
             SCREEN.blit(HIDDEN, HIDDEN_RECT)
             SPACE += 50
             COUNTER += 1
 
-        pygame.draw.rect(SCREEN, "black", [50,300,550,300],2)                                                        # Rettangolo delle lettere
+        pygame.draw.rect(SCREEN, "black", [50,300,550,350],2)                                                      # Rettangolo delle lettere
+
+        lst = check_letter("a",RAND_WORD)
+        # lst_len = len(lst)
+        # i = 0
+
+        # while i<lst_len:
+        #     letter_a = UNDERSCORE_FONT.render("a", True, "black")
+        #     a_rect = letter_a.get_rect()
+        #     a_rect.center = (((60) + lst[i]*SPACE), (150))  
+        #     i += 1  
+        
+        SCREEN.blit(letter_a, a_rect)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -334,10 +358,12 @@ def medGameEng() -> None:
         while COUNTER < RAND_WORD_LEN:
             HIDDEN = UNDERSCORE_FONT.render("_", True, "black")
             HIDDEN_RECT = HIDDEN.get_rect()
-            HIDDEN_RECT.center = (((50) + SPACE), (150))
+            HIDDEN_RECT.center = (((60) + SPACE), (150))
             SCREEN.blit(HIDDEN, HIDDEN_RECT)
             SPACE += 50
             COUNTER += 1
+        
+        pygame.draw.rect(SCREEN, "black", [50,300,550,350],2)   
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -368,10 +394,12 @@ def hardGameEng() -> None:
         while COUNTER < RAND_WORD_LEN:
             HIDDEN = UNDERSCORE_FONT.render("_", True, "black")
             HIDDEN_RECT = HIDDEN.get_rect()
-            HIDDEN_RECT.center = (((50) + SPACE), (150))
+            HIDDEN_RECT.center = (((60) + SPACE), (150))
             SCREEN.blit(HIDDEN, HIDDEN_RECT)
             SPACE += 50
             COUNTER += 1
+
+        pygame.draw.rect(SCREEN, "black", [50,300,550,350],2)   
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -402,10 +430,12 @@ def easyGameIta() -> None:
         while COUNTER < RAND_WORD_LEN:
             HIDDEN = UNDERSCORE_FONT.render("_", True, "black")
             HIDDEN_RECT = HIDDEN.get_rect()
-            HIDDEN_RECT.center = (((50) + SPACE), (150))
+            HIDDEN_RECT.center = (((60) + SPACE), (150))
             SCREEN.blit(HIDDEN, HIDDEN_RECT)
             SPACE += 50
             COUNTER += 1
+
+        pygame.draw.rect(SCREEN, "black", [50,300,550,350],2)   
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -435,10 +465,12 @@ def medGameIta() -> None:
         while COUNTER < RAND_WORD_LEN:
             HIDDEN = UNDERSCORE_FONT.render("_", True, "black")
             HIDDEN_RECT = HIDDEN.get_rect()
-            HIDDEN_RECT.center = (((50) + SPACE), (150))
+            HIDDEN_RECT.center = (((60) + SPACE), (150))
             SCREEN.blit(HIDDEN, HIDDEN_RECT)
             SPACE += 50
             COUNTER += 1
+
+        pygame.draw.rect(SCREEN, "black", [50,300,550,350],2)   
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -469,10 +501,12 @@ def hardGameIta() -> None:
         while COUNTER < RAND_WORD_LEN:
             HIDDEN = UNDERSCORE_FONT.render("_", True, "black")
             HIDDEN_RECT = HIDDEN.get_rect()
-            HIDDEN_RECT.center = (((50) + SPACE), (150))
+            HIDDEN_RECT.center = (((60) + SPACE), (150))
             SCREEN.blit(HIDDEN, HIDDEN_RECT)
             SPACE += 50
             COUNTER += 1
+
+        pygame.draw.rect(SCREEN, "black", [50,300,550,350],2)   
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
