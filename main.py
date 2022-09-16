@@ -1,5 +1,6 @@
 import pygame, sys, random
 import sqlite3
+import json
 from button import Button
 
 pygame.init()                                                                                                       # Initialize the window
@@ -10,6 +11,9 @@ pygame.display.set_caption("Hangman Game")                                      
 background = pygame.image.load("assets/img.png")                                                                    # Load background image 
 font = pygame.font.SysFont("Arial", 80, bold=True)                                                                  # Set font
 font2 = pygame.font.SysFont("Arial", 60, bold=True)                                                                 # Set font2
+
+text_box_space = 5
+text_box_num = 0
 
 c = sqlite3.connect("hangman.db")                                                                                   # Connecion to the database  
 cu = c.cursor()                                                                                                     # Cursor for execute the query
@@ -40,6 +44,58 @@ def select_score_db() -> int:                                                   
     cursor.execute(q)                                                                                               # Execute the query
     data = cursor.fetchall()                                                                                        # Fetch all the data
     return data                                                                                                     # Return the data
+
+def get_word(a) -> str:
+    words = []
+    if a == "ee":
+        with open("assets/wordlistengCorte.txt", "r") as f:                                                             # Apertura file con le parole
+            for line in f:
+                word = line.rstrip("\n")                                                                                
+                words.append(word)                                                                                      # Aggiunta delle parole alla lista
+            rand_word = random.choice(words)                                                                            # Scelta di una parola a caso dalla lista
+            return rand_word
+    elif a == "em":
+        with open("assets/wordlistengMedie.txt", "r") as f:                                                             # Apertura file con le parole
+            for line in f:
+                word = line.rstrip("\n")                                                                                
+                words.append(word)                                                                                      # Aggiunta delle parole alla lista
+            rand_word = random.choice(words)                                                                            # Scelta di una parola a caso dalla lista
+            return rand_word
+    elif a == "eh":
+        with open("assets/wordlistengLunghe.txt", "r") as f:                                                             # Apertura file con le parole
+            for line in f:
+                word = line.rstrip("\n")                                                                                
+                words.append(word)                                                                                      # Aggiunta delle parole alla lista
+            rand_word = random.choice(words)                                                                            # Scelta di una parola a caso dalla lista
+            return rand_word
+    elif a == "ic":
+        with open("assets/wordlistitaCorte.txt", "r") as f:                                                             # Apertura file con le parole
+            for line in f:
+                word = line.rstrip("\n")                                                                                
+                words.append(word)                                                                                      # Aggiunta delle parole alla lista
+            rand_word = random.choice(words)                                                                            # Scelta di una parola a caso dalla lista
+            return rand_word
+    elif a == "im":
+        with open("assets/wordlistitaMedie.txt", "r") as f:                                                             # Apertura file con le parole
+            for line in f:
+                word = line.rstrip("\n")                                                                                
+                words.append(word)                                                                                      # Aggiunta delle parole alla lista
+            rand_word = random.choice(words)                                                                            # Scelta di una parola a caso dalla lista
+            return rand_word
+    elif a == "ih":
+        with open("assets/wordlistitaLunghe.txt", "r") as f:                                                             # Apertura file con le parole
+            for line in f:
+                word = line.rstrip("\n")                                                                                
+                words.append(word)                                                                                      # Aggiunta delle parole alla lista
+            rand_word = random.choice(words)                                                                            # Scelta di una parola a caso dalla lista
+            return rand_word
+
+def box_letter(letter: str) -> str:
+    global text_box_num, text_box_space 
+    if text_box_num <= 5:
+        text = font2.render(letter, True, "black")
+        text_rect = text.get_rect(center=((105)+text_box_space, 500))
+        screen.blit(text, text_rect)
 
 def game_over_eng():
     user_text = ""
@@ -243,25 +299,22 @@ def stats_menu_eng() -> None:                                                   
     db_text = str(select_name_db())
     for char in blacklist:
         db_text = db_text.replace(char, '')
-    print(db_text)
-    for word in db_text:
-        a = word.rstrip(" ")
-        prova.append(a)
-    print(prova)
+    for word in db_text.split():
+        prova.append(word)
     while True:
         screen.fill("black")
 
         stats_mouse_pos = pygame.mouse.get_pos()
 
         stats_text = font.render("STATS SCREEN", True, "white")
-        stats_rect = stats_text.get_rect(center=(640, 100))
+        stats_rect = stats_text.get_rect(center=(640, 80))
         screen.blit(stats_text, stats_rect)
 
-        db_text = font.render(str(prova), True, "white")
-        db_rect = db_text.get_rect(center=(640, 400))
+        db_text = font.render("  ".join(prova), True, "white")
+        db_rect = db_text.get_rect(center=(370, 250))
         screen.blit(db_text, db_rect)
 
-        stats_back = Button(image=None, pos=(150, 600),                                                              # Bottone per tornare al menu principale
+        stats_back = Button(image=None, pos=(150, 670),                                                              # Bottone per tornare al menu principale
                             text_input="BACK", font=font,
                             base_color="white", 
                             hovering_color="green")
@@ -334,13 +387,8 @@ def placeLetter(letter, rand_word):
 
 
 def easy_game_eng() -> None:
-    words = []
-    with open("assets/wordlistengCorte.txt", "r") as f:                                                             # Apertura file con le parole
-        for line in f:
-            word = line.rstrip("\n")                                                                                
-            words.append(word)                                                                                      # Aggiunta delle parole alla lista
-        rand_word = random.choice(words)                                                                            # Scelta di una parola a caso dalla lista
-        rand_word_len = len(rand_word)
+    rand_word = get_word("ee")
+    rand_word_len = len(rand_word)
     print(rand_word)
 
     guesses = ''
@@ -370,6 +418,9 @@ def easy_game_eng() -> None:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_a:
+                    box_letter("a")
 
             if event.type == pygame.KEYDOWN:
                 failed = 0
@@ -415,13 +466,8 @@ def easy_game_eng() -> None:
         pygame.display.update()
 
 def med_game_eng() -> None:
-    words = []
-    with open("assets/wordlistengMedie.txt", "r") as f:
-        for line in f:
-            word = line.rstrip("\n")
-            words.append(word)
-        rand_word = random.choice(words)
-        rand_word_len = len(rand_word)
+    rand_word = get_word("em")
+    rand_word_len = len(rand_word)
     print(rand_word)
     
     while True:
@@ -449,13 +495,8 @@ def med_game_eng() -> None:
 
 
 def hard_game_eng() -> None:
-    words = []
-    with open("assets/wordlistengLunghe.txt", "r") as f:
-        for line in f:
-            word = line.rstrip("\n")
-            words.append(word)
-        rand_word = random.choice(words)
-        rand_word_len = len(rand_word)
+    rand_word = get_word("eh")
+    rand_word_len = len(rand_word)
     print(rand_word)
     
     while True:
@@ -483,13 +524,8 @@ def hard_game_eng() -> None:
 
 
 def easy_game_ita() -> None:
-    words = []
-    with open("assets/wordlistitaCorte.txt", "r") as f:
-        for line in f:
-            word = line.rstrip("\n")
-            words.append(word)
-        rand_word = random.choice(words)
-        rand_word_len = len(rand_word)
+    rand_word = get_word("ie")
+    rand_word_len = len(rand_word)
     print(rand_word)
     
     while True:
@@ -516,13 +552,8 @@ def easy_game_ita() -> None:
         pygame.display.update()
 
 def med_game_ita() -> None:
-    words = []
-    with open("assets/wordlistitaMedie.txt", "r") as f:
-        for line in f:
-            word = line.rstrip("\n")
-            words.append(word)
-        rand_word = random.choice(words)
-        rand_word_len = len(rand_word)
+    rand_word = get_word("im")
+    rand_word_len = len(rand_word)
     print(rand_word)
     
     while True:
@@ -550,13 +581,8 @@ def med_game_ita() -> None:
 
 
 def hard_game_ita() -> None:
-    words = []
-    with open("assets/wordlistitaLunghe.txt", "r") as f:
-        for line in f:
-            word = line.rstrip("\n")
-            words.append(word)
-        rand_word = random.choice(words)
-        rand_word_len = len(rand_word)
+    rand_word = get_word("ih")
+    rand_word_len = len(rand_word)
     print(rand_word)
     
     while True:
