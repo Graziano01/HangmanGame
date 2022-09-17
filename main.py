@@ -360,10 +360,41 @@ def stats_menu_ita() -> None:                                                   
         
         pygame.display.update()
 
+def check_letter(str,l):                                                                                            #funzione che restituisce posizione di una lettera
+    lst = []
+    for pos,char in enumerate(str):
+        if(char == l):
+            lst.append(pos)
+    print(lst)
+    return lst
+
+
+def placeLetter(letter, rand_word):
+    space = 10
+    wordSpace = 0
+    while wordSpace < len(rand_word):
+        text = pygame.font.Font('freesansbold.ttf',40)
+        if letter in rand_word[wordSpace]:
+            textSurf = text.render(letter,True,"black")
+            textRect = textSurf.get_rect()
+            textRect.center = (((50)+space),(150))
+            screen.blit(textSurf, textRect)
+        wordSpace += 1
+        space += 50
+
+    pygame.display.update()
+
+
+
 def easy_game_eng() -> None:
     rand_word = get_word("ee")
     rand_word_len = len(rand_word)
     print(rand_word)
+
+    guesses = ''
+    guessLett = ''
+    chances = 20
+    wordSplit = [rand_word[i:i+1] for i in range(0, len(rand_word), 1)]
     
     while True:
         screen.fill("white")
@@ -391,6 +422,47 @@ def easy_game_eng() -> None:
                 if event.key == pygame.K_a:
                     box_letter("a")
 
+            if event.type == pygame.KEYDOWN:
+                failed = 0
+                print("Failed",failed)
+                print("Chance", chances)
+                if event.key == pygame.K_a:
+#letter a
+                    guessLett = guessLett + 'a'
+                    guesses += guessLett
+                    print("letter a guessed")
+                    print("")
+                    for char in rand_word:
+                        if char in guesses:
+                            print(char)
+                        else:
+                            print("_")
+                            failed += 1
+
+                    if guessLett in rand_word:
+                        placeLetter('a',rand_word)
+            
+                    if failed == 0:
+                        print("You got the word")
+                        print(rand_word)
+                        #endGame()
+
+                    # if guessLett not in pick:
+                    #     textBoxSpace += 40    clock = pygame.time.Clock()
+                    #     textBoxNumber += 1
+                    #     chances = chances - 1
+                    #     print("")
+                    #     print(textBoxNumber)
+                    #     print("")
+                    #     print("That letter is not in the word")
+                    #     textBoxLetter('a')
+
+                    if chances == 0:
+                        print("Sorry you have lost")
+                        print("The word was",rand_word)
+                        #endGame()
+                pygame.display.update()
+            pygame.display.update()
         pygame.display.update()
 
 def med_game_eng() -> None:
