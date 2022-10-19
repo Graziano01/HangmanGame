@@ -8,7 +8,6 @@ SCREEN = pygame.display.set_mode((1280, 720))                                   
 pygame.display.set_caption("Hangman Game")                                                                          # Window's Title
 
 global contprova
-contprova = 0
 
 BACKGROUND = pygame.image.load("assets/img.png")                                                                    # Load background image 
 font = pygame.font.SysFont("Arial", 80, bold=True)                                                                  # Set font
@@ -373,6 +372,119 @@ def stats_menu_ita() -> None:                                                   
         
         pygame.display.update()
 
+def win_menu_eng()-> None:
+    while True:
+        SCREEN.fill("black")
+
+        end_mouse_pos = pygame.mouse.get_pos()
+
+        end_text = font.render("YOU WIN!!!",True,"white")
+        end_rect = end_text.get_rect(center=(640,260))
+        SCREEN.blit(end_text,end_rect)
+
+        end_back = Button(image=None, pos=(640, 460),                                                             # Bottone per tornare al menu principale
+                            text_input="BACK", font=font,
+                            base_color="white", 
+                            hovering_color="yellow")
+        
+        end_back.changeColor(end_mouse_pos)
+        end_back.update(SCREEN)
+
+        for event in pygame.event.get():                                                                            # Eventi
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if end_back.checkForInput(end_mouse_pos):
+                    main_menu_eng()
+        
+        pygame.display.update()
+
+def win_menu_ita()-> None:
+    while True:
+        SCREEN.fill("black")
+
+        end_mouse_pos = pygame.mouse.get_pos()
+
+        end_text = font.render("HAI VINTO!!!",True,"white")
+        end_rect = end_text.get_rect(center=(640,260))
+        SCREEN.blit(end_text,end_rect)
+
+        end_back = Button(image=None, pos=(640, 460),                                                             # Bottone per tornare al menu principale
+                            text_input="INDIETRO", font=font,
+                            base_color="white", 
+                            hovering_color="yellow")
+        
+        end_back.changeColor(end_mouse_pos)
+        end_back.update(SCREEN)
+
+        for event in pygame.event.get():                                                                            # Eventi
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if end_back.checkForInput(end_mouse_pos):
+                    main_menu_ita()
+        
+        pygame.display.update()
+
+def lose_menu_eng()-> None:
+    while True:
+        SCREEN.fill("black")
+
+        end_mouse_pos = pygame.mouse.get_pos()
+
+        end_text = font.render("GAME OVER",True,"white")
+        end_rect = end_text.get_rect(center=(640,260))
+        SCREEN.blit(end_text,end_rect)
+
+        end_back = Button(image=None, pos=(640, 460),                                                             # Bottone per tornare al menu principale
+                            text_input="BACK", font=font,
+                            base_color="white", 
+                            hovering_color="red")
+        
+        end_back.changeColor(end_mouse_pos)
+        end_back.update(SCREEN)
+
+        for event in pygame.event.get():                                                                            # Eventi
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if end_back.checkForInput(end_mouse_pos):
+                    main_menu_eng()
+        
+        pygame.display.update()
+
+def lose_menu_ita()-> None:
+    while True:
+        SCREEN.fill("black")
+
+        end_mouse_pos = pygame.mouse.get_pos()
+
+        end_text = font.render("HAI PERSO!!!",True,"white")
+        end_rect = end_text.get_rect(center=(640,260))
+        SCREEN.blit(end_text,end_rect)
+
+        end_back = Button(image=None, pos=(640, 460),                                                             # Bottone per tornare al menu principale
+                            text_input="INDIETRO", font=font,
+                            base_color="white", 
+                            hovering_color="yellow")
+        
+        end_back.changeColor(end_mouse_pos)
+        end_back.update(SCREEN)
+
+        for event in pygame.event.get():                                                                            # Eventi
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if end_back.checkForInput(end_mouse_pos):
+                    main_menu_ita()
+        
+        pygame.display.update()
+
+
 def check_letter(str,l):                                                                                            # Function to check if the letter is in the word
     lst = []
     for pos,char in enumerate(str):
@@ -400,7 +512,6 @@ def easy_game_eng() -> None:
     rand_word_len = len(rand_word)
     print(rand_word)
 
-    contprova = 0
 
     provaA = False
     provaB = False
@@ -560,7 +671,9 @@ def easy_game_eng() -> None:
                     box_letter("z")
                     if guess_lett in rand_word:
                         provaZ = True
-            print(contprova)
+
+            
+        
 
         if provaA:
             placeLetter("a", rand_word)
@@ -1813,3 +1926,5 @@ def main_menu_ita() -> None:                                                    
 
 if __name__ == "__main__":  
     main_menu_eng()
+    #lose_menu_eng()
+    
