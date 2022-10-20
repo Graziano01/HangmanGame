@@ -91,7 +91,7 @@ def get_word(a) -> str:                                                         
             rand_word = random.choice(words)                                                                        # Scelta di una parola a caso dalla lista
             return rand_word
 
-def box_letter(letter: str) -> str:
+def box_letter(letter: chr) -> chr:
     global text_box_num, text_box_space 
     if text_box_num <= 5:
         text = font2.render(letter, True, "black")
@@ -485,14 +485,6 @@ def lose_menu_ita()-> None:
         pygame.display.update()
 
 
-def check_letter(str,l):                                                                                            # Function to check if the letter is in the word
-    lst = []
-    for pos,char in enumerate(str):
-        if(char == l):
-            lst.append(pos)
-    print(lst)
-    return lst
-
 def placeLetter(letter, rand_word):
     space = 10
     word_space = 0
@@ -502,7 +494,6 @@ def placeLetter(letter, rand_word):
             text_rect = text_surf.get_rect()
             text_rect.center = (((50)+space),(150))
             SCREEN.blit(text_surf, text_rect)
-            contprova += 1
         word_space += 1
         space += 50
 
@@ -511,7 +502,7 @@ def easy_game_eng() -> None:
     rand_word = get_word("ee")
     rand_word_len = len(rand_word)
     print(rand_word)
-
+    contprova = 0
 
     provaA = False
     provaB = False
@@ -540,14 +531,16 @@ def easy_game_eng() -> None:
     provaY = False
     provaZ = False
 
+    nlett = 0
+    for i in range(rand_word_len):
+        if rand_word[i] not in rand_word[:i]:
+            nlett += 1
 
     guess_lett = ''
     word_split = [rand_word[i:i+1] for i in range(0, len(rand_word), 1)]
     
     while True:
         SCREEN.fill("white")
-
-        game_mouse_pos = pygame.mouse.get_pos()
 
         counter = 0
         space = 10
@@ -571,108 +564,136 @@ def easy_game_eng() -> None:
                     box_letter("a")
                     if guess_lett in rand_word:
                         provaA = True
+                        contprova += 1
                 if event.key == pygame.K_b:
                     box_letter("b")
                     if guess_lett in rand_word:
                         provaB = True
+                        contprova += 1
                 if event.key == pygame.K_c:
                     box_letter("c")
                     if guess_lett in rand_word:
                         provaC = True
+                        contprova += 1
                 if event.key == pygame.K_d:
                     box_letter("d")
                     if guess_lett in rand_word:
                         provaD = True
+                        contprova += 1
                 if event.key == pygame.K_e:
                     box_letter("e")
                     if guess_lett in rand_word:
                         provaE = True
+                        contprova += 1
                 if event.key == pygame.K_f:
                     box_letter("f")
                     if guess_lett in rand_word:
                         provaF = True
+                        contprova += 1
                 if event.key == pygame.K_g:
                     box_letter("g")
                     if guess_lett in rand_word:
                         provaG = True
+                        contprova += 1
                 if event.key == pygame.K_h:
                     box_letter("h")
                     if guess_lett in rand_word:
                         provaH = True
+                        contprova += 1
                 if event.key == pygame.K_i:
                     box_letter("i")
                     if guess_lett in rand_word:
                         provaI = True
+                        contprova += 1
                 if event.key == pygame.K_j:
                     box_letter("j")
                     if guess_lett in rand_word:
                         provaJ = True
+                        contprova += 1
                 if event.key == pygame.K_k:
                     box_letter("k")
                     if guess_lett in rand_word:
                         provaK = True
+                        contprova += 1
                 if event.key == pygame.K_l:
                     box_letter("l")
                     if guess_lett in rand_word:
                         provaL = True
+                        contprova += 1
                 if event.key == pygame.K_m:
                     box_letter("m")
                     if guess_lett in rand_word:
                         provaM = True
+                        contprova += 1
                 if event.key == pygame.K_n:
                     box_letter("n")
                     if guess_lett in rand_word:
                         provaN = True
+                        contprova += 1
                 if event.key == pygame.K_o:
                     box_letter("o")
                     if guess_lett in rand_word:
                         provaO = True
+                        contprova += 1
                 if event.key == pygame.K_p:
                     box_letter("p")
                     if guess_lett in rand_word:
                         provaP = True
+                        contprova += 1
                 if event.key == pygame.K_q:
                     box_letter("q")
                     if guess_lett in rand_word:
                         provaQ = True
+                        contprova += 1
                 if event.key == pygame.K_r:
                     box_letter("r")
                     if guess_lett in rand_word:
                         provaR = True
+                        contprova += 1
                 if event.key == pygame.K_s:
                     box_letter("s")
                     if guess_lett in rand_word:
                         provaS = True
+                        contprova += 1
                 if event.key == pygame.K_t:
                     box_letter("t")
                     if guess_lett in rand_word:
                         provaT = True
+                        contprova += 1
                 if event.key == pygame.K_u:
                     box_letter("u")
                     if guess_lett in rand_word:
                         provaU = True
+                        contprova += 1
                 if event.key == pygame.K_v:
                     box_letter("v")
                     if guess_lett in rand_word:
                         provaV = True
+                        contprova += 1
                 if event.key == pygame.K_w:
                     box_letter("w")
                     if guess_lett in rand_word:
                         provaW = True
+                        contprova += 1
                 if event.key == pygame.K_x:
                     box_letter("x")
                     if guess_lett in rand_word:
                         provaX = True
+                        contprova += 1
                 if event.key == pygame.K_y:
                     box_letter("y")
                     if guess_lett in rand_word:
                         provaY = True
+                        contprova += 1
                 if event.key == pygame.K_z:
                     box_letter("z")
                     if guess_lett in rand_word:
                         provaZ = True
+                        contprova += 1
 
-            
+        if contprova == nlett:
+            print(contprova)
+            play_menu_eng()
         
 
         if provaA:
