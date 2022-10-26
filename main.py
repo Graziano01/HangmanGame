@@ -370,12 +370,18 @@ def game(rand_word: str) -> None:
                         if guess_lett in rand_word:
                             provaA = True
                             contprova += 1
+                        if guess_lett not in rand_word:
+                            text_box_num += 1
+                            text_box_space += 40
                 if provaB == False:
                     if event.key == pygame.K_b:
                         guess_lett = 'b'
                         if guess_lett in rand_word:
                             provaB = True
                             contprova += 1
+                        if guess_lett not in rand_word:
+                            text_box_num += 1
+                            text_box_space += 40
                 if provaC == False:
                     if event.key == pygame.K_c:
                         guess_lett = 'c'
@@ -582,45 +588,75 @@ def game(rand_word: str) -> None:
 
 def win_menu()-> None:
     global lang
+    lang = "eng"
+    user_text = ""
+    INPUT_RECT = pygame.Rect(450, 370, 370, 40)
+    NAME_FONT = pygame.font.SysFont("Arial", 30, bold=True)
+    counter = 0
     #global rand_word
     while True:
-        SCREEN.fill("black")
+        SCREEN.fill("white")
 
         mouse_pos = pygame.mouse.get_pos()
 
         if lang == "eng":
-            end_text = FONT.render("YOU WIN!!!",True,"white")
+            end_text = FONT.render("YOU WIN!!!", True, "red")
             end_rect = end_text.get_rect(center=(640, 80))
             SCREEN.blit(end_text,end_rect)
-            #word_text = FONT.render("The word was: " + rand_word, True, "white")
+            name_text = FONT.render("ENTER YOUR NAME", True, "black")
+            name_rect = name_text.get_rect(center=(640, 250))
+            SCREEN.blit(name_text, name_rect)
+            pygame.draw.rect(SCREEN, "black", INPUT_RECT, 2)
+            text_surf = NAME_FONT.render(user_text, True, "black")
+            text_rect = text_surf.get_rect(center=(INPUT_RECT.centerx, INPUT_RECT.centery))
+            SCREEN.blit(text_surf, text_rect)
+            enter_but = Button(image=None,
+                            pos=(640, 440),                                                               
+                            text_input="ENTER", font=NAME_FONT,
+                            base_color="black",
+                            hovering_color="red")
+            #word_text = FONT.render("The word was: " + rand_word, True, "black")
             #word_rect = word_text.get_rect(center=(640, 200))
             #SCREEN.blit(word_text, word_rect)
             end_back = Button(image=None, pos=(150, 670),
                             text_input="BACK", font=FONT,
-                            base_color="white", 
+                            base_color="black", 
                             hovering_color="green")
         elif lang == "ita":
-            end_text = FONT.render("HAI VINTO!!!",True,"white")
+            end_text = FONT.render("HAI VINTO!!!",True,"black")
             end_rect = end_text.get_rect(center=(640, 80))
             SCREEN.blit(end_text,end_rect)
-            #word_text = FONT.render("La parola era: " + rand_word, True, "white")
+            #word_text = FONT.render("La parola era: " + rand_word, True, "black")
             #word_rect = word_text.get_rect(center=(640, 200))
             #SCREEN.blit(word_text, word_rect)
-            end_back = Button(image=None, pos=(200, 670),
+            end_back = Button(image=None, pos=(200, 670),   ## DA RIMUOVERE
                             text_input="INDIETRO", font=FONT,
-                            base_color="white", 
+                            base_color="black", 
                             hovering_color="green")
 
-        end_back.changeColor(mouse_pos)
-        end_back.update(SCREEN)
+        for botton in [end_back, enter_but]:
+            botton.changeColor(mouse_pos)
+            botton.update(SCREEN)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if end_back.checkForInput(mouse_pos):
+                if end_back.checkForInput(mouse_pos):   ## DA RIMUOVERE
                     main_menu_eng()
+                if enter_but.checkForInput(mouse_pos):
+                    db_name = user_text
+                    db_score = 100
+                    Dbase(dbase="hangman.db").insert(db_name, db_score)
+                    main_menu_eng()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_BACKSPACE:
+                    user_text = user_text[:-1]
+                    counter -= 1
+                else:
+                    user_text += event.unicode
+                    counter += 1
 
         pygame.display.update()   
 
@@ -636,7 +672,14 @@ def place_letter(letter, rand_word):
         word_space += 1
         space += 50
 
-#def box_letter():
+def box_letter(letter: chr):
+    global text_box_num, text_box_space
+    if text_box_num <= 5:
+        lett = FONT2.render(letter, True, "black")
+        lett_rect = lett.get_rect()
+        lett_rect.center = (((90) + text_box_space), (350))
+        SCREEN.blit(lett, lett_rect)
 
 if __name__ == "__main__":
+    #win_menu()
     main_menu_eng()
