@@ -56,7 +56,7 @@ def get_word_easy_ita():
 
 def get_word_med_ita():
     words = []
-    with open("assets/wordlistengMedie.txt", "r") as f:
+    with open("assets/wordlistitaMedie.txt", "r") as f:
         for line in f:
             word = line.rstrip("\n")
             words.append(word)
@@ -65,7 +65,7 @@ def get_word_med_ita():
 
 def get_word_hard_ita():
     words = []
-    with open("assets/wordlistengLunghe.txt", "r") as f:
+    with open("assets/wordlistitaLunghe.txt", "r") as f:
         for line in f:
             word = line.rstrip("\n")
             words.append(word)
