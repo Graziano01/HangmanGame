@@ -1,6 +1,6 @@
 import random
 
-def fast_eng():
+def fast_eng() -> str:
     words = []
     with open("assets/wordlistengCompleto.txt", "r") as f:
         for line in f:
@@ -9,7 +9,7 @@ def fast_eng():
         rand_word = random.choice(words)
     return rand_word
 
-def get_word_easy_eng():
+def get_word_easy_eng() -> str:
     words = []
     with open("assets/wordlistengCorte.txt", "r") as f:
         for line in f:
@@ -18,7 +18,7 @@ def get_word_easy_eng():
         rand_word = random.choice(words)
     return rand_word
 
-def get_word_med_eng():
+def get_word_med_eng() -> str:
     words = []
     with open("assets/wordlistengMedie.txt", "r") as f:
         for line in f:
@@ -27,7 +27,7 @@ def get_word_med_eng():
         rand_word = random.choice(words)
     return rand_word
 
-def get_word_hard_eng():
+def get_word_hard_eng() -> str:
     words = []
     with open("assets/wordlistengLunghe.txt", "r") as f:
         for line in f:
@@ -36,7 +36,7 @@ def get_word_hard_eng():
         rand_word = random.choice(words)
     return rand_word
 
-def fast_ita():
+def fast_ita() -> str:
     words = []
     with open("assets/wordlistitaCompleto.txt", "r") as f:
         for line in f:
@@ -45,7 +45,7 @@ def fast_ita():
         rand_word = random.choice(words)
     return rand_word
 
-def get_word_easy_ita():
+def get_word_easy_ita() -> str:
     words = []
     with open("assets/wordlistitaCorte.txt", "r") as f:
         for line in f:
@@ -54,7 +54,7 @@ def get_word_easy_ita():
         rand_word = random.choice(words)
     return rand_word
 
-def get_word_med_ita():
+def get_word_med_ita() -> str:
     words = []
     with open("assets/wordlistitaMedie.txt", "r") as f:
         for line in f:
@@ -63,7 +63,7 @@ def get_word_med_ita():
         rand_word = random.choice(words)
     return rand_word
 
-def get_word_hard_ita():
+def get_word_hard_ita() -> str:
     words = []
     with open("assets/wordlistitaLunghe.txt", "r") as f:
         for line in f:
