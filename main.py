@@ -301,6 +301,7 @@ def game(rand_word: str) -> None:
     global text_box_num, text_box_space
 
     contprova = 0
+    life = 11
 
     rand_word_len = len(rand_word)
     print(rand_word)
@@ -371,6 +372,7 @@ def game(rand_word: str) -> None:
                             provaA = True
                             contprova += 1
                         if guess_lett not in rand_word:
+                            life -= 1
                             text_box_num += 1
                             text_box_space += 40
                 if provaB == False:
@@ -380,6 +382,7 @@ def game(rand_word: str) -> None:
                             provaB = True
                             contprova += 1
                         if guess_lett not in rand_word:
+                            life -= 1
                             text_box_num += 1
                             text_box_space += 40
                 if provaC == False:
@@ -388,144 +391,274 @@ def game(rand_word: str) -> None:
                         if guess_lett in rand_word:
                             provaC = True
                             contprova += 1
+                        if guess_lett not in rand_word:
+                            life -= 1
+                            text_box_num += 1
+                            text_box_space += 40
                 if provaD == False:
                     if event.key == pygame.K_d:
                         guess_lett = 'd'
                         if guess_lett in rand_word:
                             provaD = True
                             contprova += 1
+                        if guess_lett not in rand_word:
+                            life -= 1
+                            text_box_num += 1
+                            text_box_space += 40
                 if provaE == False:
                     if event.key == pygame.K_e:
                         guess_lett = 'e'
                         if guess_lett in rand_word:
                             provaE = True
                             contprova += 1
+                        if guess_lett not in rand_word:
+                            life -= 1
+                            text_box_num += 1
+                            text_box_space += 40
                 if provaF == False:
                     if event.key == pygame.K_f:
                         guess_lett = 'f'
                         if guess_lett in rand_word:
                             provaF = True
                             contprova += 1
+                        if guess_lett not in rand_word:
+                            life -= 1
+                            text_box_num += 1
+                            text_box_space += 40
                 if provaG == False: 
                     if event.key == pygame.K_g:
                         guess_lett = 'g'
                         if guess_lett in rand_word:
                             provaG = True
                             contprova += 1 
+                        if guess_lett not in rand_word:
+                            life -= 1
+                            text_box_num += 1
+                            text_box_space += 40
                 if provaH == False:
                     if event.key == pygame.K_h:
                         guess_lett = 'h'
                         if guess_lett in rand_word:
                             provaH = True
                             contprova += 1
+                        if guess_lett not in rand_word:
+                            life -= 1
+                            text_box_num += 1
+                            text_box_space += 40
                 if provaI == False:
                     if event.key == pygame.K_i:
                         guess_lett = 'i'
                         if guess_lett in rand_word:
                             provaI = True
                             contprova += 1
+                        if guess_lett not in rand_word:
+                            life -= 1
+                            text_box_num += 1
+                            text_box_space += 40
                 if provaJ == False:
                     if event.key == pygame.K_j:
                         guess_lett = 'j'
                         if guess_lett in rand_word:
                             provaJ = True
-                            contprova += 1 
+                            contprova += 1
+                        if guess_lett not in rand_word:
+                            life -= 1
+                            text_box_num += 1
+                            text_box_space += 40
                 if provaK == False:
                     if event.key == pygame.K_k:
                         guess_lett = 'k'
                         if guess_lett in rand_word:
                             provaK = True
                             contprova += 1
+                        if guess_lett not in rand_word:
+                            life -= 1
+                            text_box_num += 1
+                            text_box_space += 40
                 if provaL == False: 
                     if event.key == pygame.K_l:
                         guess_lett = 'l'
                         if guess_lett in rand_word:
                             provaL = True
                             contprova += 1 
+                        if guess_lett not in rand_word:
+                            life -= 1
+                            text_box_num += 1
+                            text_box_space += 40
                 if provaM == False:
                     if event.key == pygame.K_m:
                         guess_lett = 'm'
                         if guess_lett in rand_word:
                             provaM = True
-                            contprova += 1 
+                            contprova += 1
+                        if guess_lett not in rand_word:
+                            life -= 1
+                            text_box_num += 1
+                            text_box_space += 40 
                 if provaN == False:
                     if event.key == pygame.K_n:
                         guess_lett = 'n'
                         if guess_lett in rand_word:
                             provaN = True
-                            contprova += 1 
+                            contprova += 1
+                        if guess_lett not in rand_word:
+                            life -= 1
+                            text_box_num += 1
+                            text_box_space += 40
                 if provaO == False:
                     if event.key == pygame.K_o:
                         guess_lett = 'o'
                         if guess_lett in rand_word:
                             provaO = True
                             contprova += 1
+                        if guess_lett not in rand_word:
+                            life -= 1
+                            text_box_num += 1
+                            text_box_space += 40
                 if provaP == False: 
                     if event.key == pygame.K_p:
                         guess_lett = 'p'
                         if guess_lett in rand_word:
                             provaP = True
-                            contprova += 1 
+                            contprova += 1
+                        if guess_lett not in rand_word:
+                            life -= 1
+                            text_box_num += 1
+                            text_box_space += 40 
                 if provaQ == False:
                     if event.key == pygame.K_q:
                         guess_lett = 'q'
                         if guess_lett in rand_word:
                             provaQ = True
                             contprova += 1 
+                        if guess_lett not in rand_word:
+                            life -= 1
+                            text_box_num += 1
+                            text_box_space += 40
                 if provaR == False:
                     if event.key == pygame.K_r:
                         guess_lett = 'r'
                         if guess_lett in rand_word:
                             provaR = True
                             contprova += 1
+                        if guess_lett not in rand_word:
+                            life -= 1
+                            text_box_num += 1
+                            text_box_space += 40
                 if provaS == False: 
                     if event.key == pygame.K_s:
                         guess_lett = 's'
                         if guess_lett in rand_word:
                             provaS = True
-                            contprova += 1 
+                            contprova += 1
+                        if guess_lett not in rand_word:
+                            life -= 1
+                            text_box_num += 1
+                            text_box_space += 40
                 if provaT == False:
                     if event.key == pygame.K_t:
                         guess_lett = 't'
                         if guess_lett in rand_word:
                             provaT = True
-                            contprova += 1 
+                            contprova += 1
+                        if guess_lett not in rand_word:
+                            life -= 1
+                            text_box_num += 1
+                            text_box_space += 40
                 if provaU == False:
                     if event.key == pygame.K_u:
                         guess_lett = 'u'
                         if guess_lett in rand_word:
                             provaU = True
                             contprova += 1
+                        if guess_lett not in rand_word:
+                            life -= 1
+                            text_box_num += 1
+                            text_box_space += 40
                 if provaV == False: 
                     if event.key == pygame.K_v:
                         guess_lett = 'v'
                         if guess_lett in rand_word:
                             provaV = True
-                            contprova += 1 
+                            contprova += 1
+                        if guess_lett not in rand_word:
+                            life -= 1
+                            text_box_num += 1
+                            text_box_space += 40
                 if provaW == False:
                     if event.key == pygame.K_w:
                         guess_lett = 'w'
                         if guess_lett in rand_word:
                             provaW = True
-                            contprova += 1 
+                            contprova += 1
+                        if guess_lett not in rand_word:
+                            life -= 1
+                            text_box_num += 1
+                            text_box_space += 40
                 if provaX == False:
                     if event.key == pygame.K_x:
                         guess_lett = 'x'
                         if guess_lett in rand_word:
                             provaX = True
-                            contprova += 1 
+                            contprova += 1
+                        if guess_lett not in rand_word:
+                            life -= 1
+                            text_box_num += 1
+                            text_box_space += 40
                 if provaY == False:
                     if event.key == pygame.K_y:
                         guess_lett = 'y'
                         if guess_lett in rand_word:
                             provaY = True
-                            contprova += 1 
+                            contprova += 1
+                        if guess_lett not in rand_word:
+                            life -= 1
+                            text_box_num += 1
+                            text_box_space += 40 
                 if provaZ == False:
                     if event.key == pygame.K_z:
                         guess_lett = 'z'
                         if guess_lett in rand_word:
                             provaZ = True
-                            contprova += 1 
+                            contprova += 1
+                        if guess_lett not in rand_word:
+                            life -= 1
+                            text_box_num += 1
+                            text_box_space += 40
+
+        if life == 10:
+            # aggiungi disegno
+            print("a") # cancella
+        elif life == 9:
+            # aggiungi disegno
+            print("b") # cancella
+        elif life == 8:
+            # aggiungi disegno
+            print("c") # cancella
+        elif life == 7:
+            # aggiungi disegno
+            print("D") # cancella
+        elif life == 6:
+            # aggiungi disegno
+            print("aaa") # cancella
+        elif life == 5:
+            # aggiungi disegno
+            print("aaa") # cancella
+        elif life == 4:
+            # aggiungi disegno
+            print("aaa") # cancella
+        elif life == 3:
+            # aggiungi disegno
+            print("aaa") # cancella
+        elif life == 2:
+            # aggiungi disegno
+            print("aaa") # cancella
+        elif life == 1:
+            # aggiungi disegno
+            print("aaa") # cancella
+        elif life == 0:
+            # aggiungi funzione lose_game()
+            print("aaa") # cancella
 
         if contprova == nlett:
             print(contprova)
@@ -646,10 +779,16 @@ def win_menu()-> None:
                 if end_back.checkForInput(mouse_pos):   ## DA RIMUOVERE
                     main_menu_eng()
                 if enter_but.checkForInput(mouse_pos):
-                    db_name = user_text
-                    db_score = 100
-                    Dbase(dbase="hangman.db").insert(db_name, db_score)
-                    main_menu_eng()
+                    if Dbase(dbase="hangman.db").search(name=user_text):
+                        db_name = user_text
+                        db_score = Dbase(dbase="hangman.db").search(name=user_text)[0][1]
+                        Dbase(dbase="hangman.db").update(name=user_text, score=db_score + 100)
+                        main_menu_eng()
+                    else:
+                        db_name = user_text
+                        db_score = 100
+                        Dbase(dbase="hangman.db").insert(db_name, db_score)
+                        main_menu_eng()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_BACKSPACE:
                     user_text = user_text[:-1]
