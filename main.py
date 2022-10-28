@@ -828,8 +828,11 @@ def lost_menu() -> None:
 
         if lang == "eng":
             lose_text = FONT.render("YOU LOSE!", True, "red")
-            lose_rect = lose_text.get_rect(center=(620, 80))
+            lose_rect = lose_text.get_rect(center=(640, 80))
             SCREEN.blit(lose_text, lose_rect)
+            tryagain_text = FONT.render("TRY AGAIN!", True, "yellow")
+            tryagain_rect = tryagain_text.get_rect(center = (640, 300))
+            SCREEN.blit(tryagain_text,tryagain_rect)
             back_but = Button(image=None,
                             pos=(200, 670),                                                               
                             text_input="BACK", font=FONT,
@@ -838,10 +841,13 @@ def lost_menu() -> None:
 
         elif lang == "ita":
             lose_text = FONT.render("HAI PERSO!", True, "red")
-            lose_rect = lose_text.get_rect(center=(680, 80))
+            lose_rect = lose_text.get_rect(center=(640, 80))
             SCREEN.blit(lose_text, lose_rect)
+            tryagain_text = FONT.render("PROVA DI NUOVO!", True, "yellow")
+            tryagain_rect = tryagain_text.get_rect(center = (640, 300))
+            SCREEN.blit(tryagain_text,tryagain_rect)
             back_but = Button(image=None,
-                            pos=(200, 670),                                                               
+                            pos=(230, 670),                                                               
                             text_input="INDIETRO", font=FONT,
                             base_color="white",
                             hovering_color="red")
@@ -881,4 +887,6 @@ def box_letter(letter: chr) -> None:
         SCREEN.blit(lett, lett_rect)
 
 if __name__ == "__main__":
-    main_menu_eng()
+   # main_menu_eng()
+   lang = "ita"
+   lost_menu()
