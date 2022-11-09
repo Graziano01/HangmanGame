@@ -1,5 +1,6 @@
 import pygame, sys
 from button import Button
+from sketch import *
 from mode import *
 from dbase import *
 
@@ -357,6 +358,29 @@ def game(rand_word: str) -> None:
     while True:
         SCREEN.fill("white")
 
+        if life == 10:
+            draw(life)
+        elif life == 9:
+            draw(life)
+        elif life == 8:
+            draw(life)
+        elif life == 7:
+            draw(life)
+        elif life == 6:
+            draw(life)
+        elif life == 5:
+            draw(life)
+        elif life == 4:
+            draw(life)
+        elif life == 3:
+            draw(life)
+        elif life == 2:
+            draw(life)
+        elif life == 1:
+            draw(life)
+        elif life == 0:
+            lose_menu()
+
         counter = 0
         space = 10
 
@@ -382,9 +406,11 @@ def game(rand_word: str) -> None:
                             provaA = True
                             contprova += 1
                         if guess_lett not in rand_word:
+                            provaA = True
                             life -= 1
                             text_box_num += 1
                             text_box_space += 40
+                            box_letter(guess_lett)
                 if provaB == False:
                     if event.key == pygame.K_b:
                         guess_lett = 'b'
@@ -392,6 +418,7 @@ def game(rand_word: str) -> None:
                             provaB = True
                             contprova += 1
                         if guess_lett not in rand_word:
+                            provaB = True
                             life -= 1
                             text_box_num += 1
                             text_box_space += 40
@@ -402,6 +429,7 @@ def game(rand_word: str) -> None:
                             provaC = True
                             contprova += 1
                         if guess_lett not in rand_word:
+                            provaC = True
                             life -= 1
                             text_box_num += 1
                             text_box_space += 40
@@ -412,6 +440,7 @@ def game(rand_word: str) -> None:
                             provaD = True
                             contprova += 1
                         if guess_lett not in rand_word:
+                            provaD = True
                             life -= 1
                             text_box_num += 1
                             text_box_space += 40
@@ -422,6 +451,7 @@ def game(rand_word: str) -> None:
                             provaE = True
                             contprova += 1
                         if guess_lett not in rand_word:
+                            provaE = True
                             life -= 1
                             text_box_num += 1
                             text_box_space += 40
@@ -432,6 +462,7 @@ def game(rand_word: str) -> None:
                             provaF = True
                             contprova += 1
                         if guess_lett not in rand_word:
+                            provaF = True
                             life -= 1
                             text_box_num += 1
                             text_box_space += 40
@@ -442,6 +473,7 @@ def game(rand_word: str) -> None:
                             provaG = True
                             contprova += 1 
                         if guess_lett not in rand_word:
+                            provaG = True
                             life -= 1
                             text_box_num += 1
                             text_box_space += 40
@@ -452,6 +484,7 @@ def game(rand_word: str) -> None:
                             provaH = True
                             contprova += 1
                         if guess_lett not in rand_word:
+                            provaH = True
                             life -= 1
                             text_box_num += 1
                             text_box_space += 40
@@ -462,6 +495,7 @@ def game(rand_word: str) -> None:
                             provaI = True
                             contprova += 1
                         if guess_lett not in rand_word:
+                            provaI = True
                             life -= 1
                             text_box_num += 1
                             text_box_space += 40
@@ -472,6 +506,7 @@ def game(rand_word: str) -> None:
                             provaJ = True
                             contprova += 1
                         if guess_lett not in rand_word:
+                            provaJ = True
                             life -= 1
                             text_box_num += 1
                             text_box_space += 40
@@ -482,6 +517,7 @@ def game(rand_word: str) -> None:
                             provaK = True
                             contprova += 1
                         if guess_lett not in rand_word:
+                            provaK = True
                             life -= 1
                             text_box_num += 1
                             text_box_space += 40
@@ -492,6 +528,7 @@ def game(rand_word: str) -> None:
                             provaL = True
                             contprova += 1 
                         if guess_lett not in rand_word:
+                            provaL = True
                             life -= 1
                             text_box_num += 1
                             text_box_space += 40
@@ -502,6 +539,7 @@ def game(rand_word: str) -> None:
                             provaM = True
                             contprova += 1
                         if guess_lett not in rand_word:
+                            provaM = True
                             life -= 1
                             text_box_num += 1
                             text_box_space += 40 
@@ -512,6 +550,7 @@ def game(rand_word: str) -> None:
                             provaN = True
                             contprova += 1
                         if guess_lett not in rand_word:
+                            provaN = True
                             life -= 1
                             text_box_num += 1
                             text_box_space += 40
@@ -522,6 +561,7 @@ def game(rand_word: str) -> None:
                             provaO = True
                             contprova += 1
                         if guess_lett not in rand_word:
+                            provaO = True
                             life -= 1
                             text_box_num += 1
                             text_box_space += 40
@@ -532,6 +572,7 @@ def game(rand_word: str) -> None:
                             provaP = True
                             contprova += 1
                         if guess_lett not in rand_word:
+                            provaP = True
                             life -= 1
                             text_box_num += 1
                             text_box_space += 40 
@@ -542,6 +583,7 @@ def game(rand_word: str) -> None:
                             provaQ = True
                             contprova += 1 
                         if guess_lett not in rand_word:
+                            provaQ = True
                             life -= 1
                             text_box_num += 1
                             text_box_space += 40
@@ -552,6 +594,7 @@ def game(rand_word: str) -> None:
                             provaR = True
                             contprova += 1
                         if guess_lett not in rand_word:
+                            provaR = True
                             life -= 1
                             text_box_num += 1
                             text_box_space += 40
@@ -562,6 +605,7 @@ def game(rand_word: str) -> None:
                             provaS = True
                             contprova += 1
                         if guess_lett not in rand_word:
+                            provaS = True
                             life -= 1
                             text_box_num += 1
                             text_box_space += 40
@@ -572,6 +616,7 @@ def game(rand_word: str) -> None:
                             provaT = True
                             contprova += 1
                         if guess_lett not in rand_word:
+                            provaT = True
                             life -= 1
                             text_box_num += 1
                             text_box_space += 40
@@ -582,6 +627,7 @@ def game(rand_word: str) -> None:
                             provaU = True
                             contprova += 1
                         if guess_lett not in rand_word:
+                            provaU = True
                             life -= 1
                             text_box_num += 1
                             text_box_space += 40
@@ -592,6 +638,7 @@ def game(rand_word: str) -> None:
                             provaV = True
                             contprova += 1
                         if guess_lett not in rand_word:
+                            provaV = True
                             life -= 1
                             text_box_num += 1
                             text_box_space += 40
@@ -602,6 +649,7 @@ def game(rand_word: str) -> None:
                             provaW = True
                             contprova += 1
                         if guess_lett not in rand_word:
+                            provaW = True
                             life -= 1
                             text_box_num += 1
                             text_box_space += 40
@@ -612,6 +660,7 @@ def game(rand_word: str) -> None:
                             provaX = True
                             contprova += 1
                         if guess_lett not in rand_word:
+                            provaX = True
                             life -= 1
                             text_box_num += 1
                             text_box_space += 40
@@ -622,6 +671,7 @@ def game(rand_word: str) -> None:
                             provaY = True
                             contprova += 1
                         if guess_lett not in rand_word:
+                            provaY = True
                             life -= 1
                             text_box_num += 1
                             text_box_space += 40 
@@ -632,40 +682,11 @@ def game(rand_word: str) -> None:
                             provaZ = True
                             contprova += 1
                         if guess_lett not in rand_word:
+                            provaZ = True
                             life -= 1
                             text_box_num += 1
                             text_box_space += 40
 
-        if life == 10:
-            pygame.draw.rect(SCREEN, "black", [650, 640, 400, 10])
-        elif life == 9:
-            pygame.draw.rect(SCREEN, "black", [650, 540, 400, 10])       #750, 640, 10, 400
-        elif life == 8:
-            # aggiungi disegno
-            print("c") # cancella
-        elif life == 7:
-            # aggiungi disegno
-            print("D") # cancella
-        elif life == 6:
-            # aggiungi disegno
-            print("aaa") # cancella
-        elif life == 5:
-            # aggiungi disegno
-            print("aaa") # cancella
-        elif life == 4:
-            # aggiungi disegno
-            print("aaa") # cancella
-        elif life == 3:
-            # aggiungi disegno
-            print("aaa") # cancella
-        elif life == 2:
-            # aggiungi disegno
-            print("aaa") # cancella
-        elif life == 1:
-            # aggiungi disegno
-            print("aaa") # cancella
-        elif life == 0:
-            lost_menu()
 
         if contprova == nlett:
             print(contprova)
@@ -818,8 +839,8 @@ def win_menu()-> None:
 
         pygame.display.update()
 
-def lost_menu() -> None:
-    global lang
+def lose_menu() -> None:
+    global lang, word
     while True:
         SCREEN.fill("black")
 
@@ -829,8 +850,11 @@ def lost_menu() -> None:
             lose_text = FONT.render("YOU LOSE!", True, "red")
             lose_rect = lose_text.get_rect(center=(620, 80))
             SCREEN.blit(lose_text, lose_rect)
+            word_text = FONT.render("The word was '%s'" % (word), True, "white")
+            word_rect = word_text.get_rect(center=(640, 220))
+            SCREEN.blit(word_text, word_rect)
             back_but = Button(image=None,
-                            pos=(200, 670),                                                               
+                            pos=(150, 670),                                                               
                             text_input="BACK", font=FONT,
                             base_color="white",
                             hovering_color="red")
@@ -839,6 +863,9 @@ def lost_menu() -> None:
             lose_text = FONT.render("HAI PERSO!", True, "red")
             lose_rect = lose_text.get_rect(center=(680, 80))
             SCREEN.blit(lose_text, lose_rect)
+            word_text = FONT.render("La parola era '%s'" % (word), True, "white")
+            word_rect = word_text.get_rect(center=(640, 220))
+            SCREEN.blit(word_text, word_rect)
             back_but = Button(image=None,
                             pos=(200, 670),                                                               
                             text_input="INDIETRO", font=FONT,
@@ -859,7 +886,7 @@ def lost_menu() -> None:
 
         pygame.display.update()
 
-def place_letter(letter, rand_word) -> None:
+def place_letter(letter: str, rand_word: str) -> None:
     space = 10
     word_space = 0
     while word_space < len(rand_word):
@@ -871,12 +898,17 @@ def place_letter(letter, rand_word) -> None:
         word_space += 1
         space += 50
 
-def box_letter(letter: chr) -> None:
+def box_letter(letter: str) -> None:
     global text_box_num, text_box_space
     if text_box_num <= 5:
         lett = FONT2.render(letter, True, "black")
         lett_rect = lett.get_rect()
         lett_rect.center = (((90) + text_box_space), (350))
+        SCREEN.blit(lett, lett_rect)
+    elif text_box_num <= 10:
+        lett = FONT2.render(letter, True, "black")
+        lett_rect = lett.get_rect()
+        lett_rect.center = (((90) + text_box_space), (450))
         SCREEN.blit(lett, lett_rect)
 
 if __name__ == "__main__":
