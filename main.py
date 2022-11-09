@@ -22,7 +22,7 @@ FONT2 = pygame.font.SysFont("Arial", 60, bold=True)
 
 ### English Main Menu ###
 def main_menu_eng() -> None:
-    global lang, diff
+    global lang, diff, word
     diff = 0
     lang = "eng"
     while True:
@@ -77,7 +77,7 @@ def main_menu_eng() -> None:
 
 ### Italian Main Menu ###
 def main_menu_ita() -> None:
-    global lang, diff
+    global lang, diff, word
     diff = 0
     lang = "ita"
     while True:
@@ -132,7 +132,7 @@ def main_menu_ita() -> None:
 
 ### Difficulty Select Menu ENG ###
 def play_menu_eng() -> None:
-    global lang, diff
+    global lang, diff, word
     diff = 0
     lang = "eng"
     while True:
@@ -191,7 +191,7 @@ def play_menu_eng() -> None:
 
 ### Difficulty Select Menu ITA ###
 def play_menu_ita() -> None:
-    global lang, diff
+    global lang, diff, word
     diff = 0
     lang = "ita"
     while True:
@@ -727,12 +727,11 @@ def game(rand_word: str) -> None:
         pygame.display.update()
 
 def win_menu()-> None:
-    global lang, diff
+    global lang, diff, word
     user_text = ""
-    INPUT_RECT = pygame.Rect(450, 370, 370, 40)
+    INPUT_RECT = pygame.Rect(450, 400, 400, 40)
     NAME_FONT = pygame.font.SysFont("Arial", 30, bold=True)
     counter = 0
-    #global rand_word
     while True:
         SCREEN.fill("white")
 
@@ -742,41 +741,41 @@ def win_menu()-> None:
             end_text = FONT.render("YOU WIN!!!", True, "red")
             end_rect = end_text.get_rect(center=(640, 80))
             SCREEN.blit(end_text,end_rect)
-            name_text = FONT.render("ENTER YOUR NAME", True, "black")
-            name_rect = name_text.get_rect(center=(640, 250))
+            word_text = FONT.render("The word was '%s'" % (word), True, "black")
+            word_rect = word_text.get_rect(center=(640, 180))
+            SCREEN.blit(word_text, word_rect)
+            name_text = FONT2.render("ENTER YOUR NAME", True, "black")
+            name_rect = name_text.get_rect(center=(640, 330))
             SCREEN.blit(name_text, name_rect)
             pygame.draw.rect(SCREEN, "black", INPUT_RECT, 2)
             text_surf = NAME_FONT.render(user_text, True, "black")
             text_rect = text_surf.get_rect(center=(INPUT_RECT.centerx, INPUT_RECT.centery))
             SCREEN.blit(text_surf, text_rect)
             enter_but = Button(image=None,
-                            pos=(640, 440),                                                               
+                            pos=(650, 470),                                                               
                             text_input="ENTER", font=NAME_FONT,
                             base_color="black",
                             hovering_color="red")
-            #word_text = FONT.render("The word was: " + rand_word, True, "black")
-            #word_rect = word_text.get_rect(center=(640, 200))
-            #SCREEN.blit(word_text, word_rect)
             
         elif lang == "ita":
-            end_text = FONT.render("HAI VINTO!!!",True,"red")
+            end_text = FONT.render("HAI VINTO!!!", True, "red")
             end_rect = end_text.get_rect(center=(640, 80))
             SCREEN.blit(end_text,end_rect)
-            name_text = FONT.render("INSERISCI IL TUO NOME", True, "black")
-            name_rect = name_text.get_rect(center=(640, 250))
+            word_text = FONT.render("La parola era '%s'" % (word), True, "black")
+            word_rect = word_text.get_rect(center=(640, 180))
+            SCREEN.blit(word_text, word_rect)
+            name_text = FONT2.render("INSERISCI IL TUO NOME", True, "black")
+            name_rect = name_text.get_rect(center=(640, 330))
             SCREEN.blit(name_text, name_rect)
             pygame.draw.rect(SCREEN, "black", INPUT_RECT, 2)
             text_surf = NAME_FONT.render(user_text, True, "black")
             text_rect = text_surf.get_rect(center=(INPUT_RECT.centerx, INPUT_RECT.centery))
             SCREEN.blit(text_surf, text_rect)
             enter_but = Button(image=None,
-                            pos=(640, 440),                                                               
+                            pos=(650, 470),                                                               
                             text_input="INVIO", font=NAME_FONT,
                             base_color="black",
                             hovering_color="red")
-            #word_text = FONT.render("La parola era: " + rand_word, True, "black")
-            #word_rect = word_text.get_rect(center=(640, 200))
-            #SCREEN.blit(word_text, word_rect)
 
         for botton in [enter_but]:
             botton.changeColor(mouse_pos)

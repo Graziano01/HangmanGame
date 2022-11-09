@@ -17,6 +17,16 @@ class Dbase:
         rows = self.cur.fetchall()
         return rows
 
+    def get_name(self):
+        self.cur.execute("SELECT name FROM stats")
+        rows = self.cur.fetchall()
+        return rows
+
+    def get_score(self):
+        self.cur.execute("SELECT score FROM stats")
+        rows = self.cur.fetchall()
+        return rows
+
     def search(self, name="", score=""):
         self.cur.execute("SELECT * FROM stats WHERE name=? OR score=?", (name, score))
         rows = self.cur.fetchall()
