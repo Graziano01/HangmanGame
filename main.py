@@ -67,7 +67,7 @@ def main_menu_eng() -> None:
                 if play_but.checkForInput(mouse_pos):
                     play_menu_eng()
                 if stats_but.checkForInput(mouse_pos):
-                    stats_menu_eng()
+                    stats_menu()
                 if ita_but.checkForInput(mouse_pos):
                     main_menu_ita()
                 if quick_but.checkForInput(mouse_pos):
@@ -122,7 +122,7 @@ def main_menu_ita() -> None:
                 if play_but.checkForInput(mouse_pos):
                     play_menu_ita()
                 if stats_but.checkForInput(mouse_pos):
-                    stats_menu_ita()
+                    stats_menu()
                 if eng_but.checkForInput(mouse_pos):
                     main_menu_eng()
                 if quick_but.checkForInput(mouse_pos):
@@ -248,64 +248,70 @@ def play_menu_ita() -> None:
 
         pygame.display.update()
 
-### Stats Menu ENG
-def stats_menu_eng() -> None:
-    while True:
-        SCREEN.fill("black")
+### Stats Menu 
+def stats_menu() -> None:
+    global lang
+    names = Dbase(dbase="hangman.db").view()
 
-        mouse_pos = pygame.mouse.get_pos()
+    if lang == "eng":
+        while True:
+            SCREEN.fill("black")
 
-        stats_text = FONT.render("STATS SCREEN", True, "white")
-        stats_rect = stats_text.get_rect(center=(640, 80))
-        SCREEN.blit(stats_text, stats_rect)
+            mouse_pos = pygame.mouse.get_pos()
 
-        stats_back = Button(image=None, pos=(150, 670),
-                        text_input="BACK", font=FONT,
-                        base_color="white",
-                        hovering_color="green")
+            stats_text = FONT.render("STATS SCREEN", True, "white")
+            stats_rect = stats_text.get_rect(center=(640, 80))
+            SCREEN.blit(stats_text, stats_rect)
 
-        stats_back.changeColor(mouse_pos)
-        stats_back.update(SCREEN)
+            stats_name = FONT.render(str(names), True, "white")
+            name_rect = stats_name.get_rect(center=(640, 250))
+            SCREEN.blit(stats_name, name_rect)
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if stats_back.checkForInput(mouse_pos):
-                    main_menu_eng()
+            stats_back = Button(image=None, pos=(150, 670),
+                            text_input="BACK", font=FONT,
+                            base_color="white",
+                            hovering_color="green")
 
-        pygame.display.update()
+            stats_back.changeColor(mouse_pos)
+            stats_back.update(SCREEN)
 
-### Stats Menu Ita
-def stats_menu_ita() -> None:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if stats_back.checkForInput(mouse_pos):
+                        main_menu_eng()
 
-    while True:
-        SCREEN.fill("black")
+            pygame.display.update()
+    
+    elif lang == "ita":
+        while True:
+            SCREEN.fill("black")
 
-        mouse_pos = pygame.mouse.get_pos()
+            mouse_pos = pygame.mouse.get_pos()
 
-        stats_text = FONT.render("SCHERMO STATISTICHE", True, "white")
-        stats_rect = stats_text.get_rect(center=(640, 80))
-        SCREEN.blit(stats_text, stats_rect)
+            stats_text = FONT.render("SCHERMO STATISTICHE", True, "white")
+            stats_rect = stats_text.get_rect(center=(640, 80))
+            SCREEN.blit(stats_text, stats_rect)
 
-        stats_back = Button(image=None, pos=(200, 670),
-                        text_input="INDIETRO", font=FONT,
-                        base_color="white",
-                        hovering_color="green")
+            stats_back = Button(image=None, pos=(200, 670),
+                            text_input="INDIETRO", font=FONT,
+                            base_color="white",
+                            hovering_color="green")
 
-        stats_back.changeColor(mouse_pos)
-        stats_back.update(SCREEN)
+            stats_back.changeColor(mouse_pos)
+            stats_back.update(SCREEN)
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if stats_back.checkForInput(mouse_pos):
-                    main_menu_ita()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if stats_back.checkForInput(mouse_pos):
+                        main_menu_ita()
 
-        pygame.display.update()
+            pygame.display.update()
 
 def game(rand_word: str) -> None:
     global word_split
