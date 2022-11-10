@@ -13,13 +13,12 @@ BACKGROUND = pygame.image.load("assets/img.png")
 FONT = pygame.font.SysFont("Arial", 80, bold=True)
 FONT2 = pygame.font.SysFont("Arial", 60, bold=True)
 
-### TEST DB ###
-#test = "prova2"
-#score = 0
-#Dbase(dbase="hangman.db").insert(test, score)
+"""
+uncomment the following two lines to print 
+in the terminal the stats of the player
+"""
 #a = Dbase(dbase="hangman.db").view()
 #print(a)
-###############
 
 ### English Main Menu ###
 def main_menu_eng() -> None:
@@ -321,7 +320,7 @@ def game(rand_word: str) -> None:
     life = 11
 
     rand_word_len = len(rand_word)
-    print(rand_word)
+    
 
     provaA, provaB, provaC, provaD, provaE, provaF, provaG, provaH, provaI, provaJ, provaK, provaL, provaM, provaN, provaO, provaP, provaQ, provaR, provaS, provaT, provaU, provaV, provaW, provaX, provaY, provaZ = (0,)*26
     
@@ -399,7 +398,6 @@ def game(rand_word: str) -> None:
                             life -= 1
                             text_box_num += 1
                             text_box_space += 40
-                            box_letter(guess_lett)
                 if provaB == False:
                     if event.key == pygame.K_b:
                         guess_lett = 'b'
@@ -678,113 +676,112 @@ def game(rand_word: str) -> None:
 
 
         if contprova == nlett:
-            print(contprova)
             win_menu()
 
         if provaA > 0:
             place_letter("a", rand_word)
-        elif provaA < 0:
-            box_letter("A")
+        #elif provaA < 0:
+        #    box_letter("A")
         if provaB > 0:
             place_letter("b", rand_word)
-        elif provaB < 0:
-            box_letter("B")
+        #elif provaB < 0:
+        #    box_letter("B")
         if provaC > 0:
             place_letter("c", rand_word)
-        elif provaC < 0:
-            box_letter("C")
+        #elif provaC < 0:
+        #    box_letter("C")
         if provaD > 0:
             place_letter("d", rand_word)
-        elif provaD < 0:
-            box_letter("D")
+        #elif provaD < 0:
+        #    box_letter("D")
         if provaE > 0:
             place_letter("e", rand_word)
-        elif provaE < 0:
-            box_letter("E")
+        #elif provaE < 0:
+        #    box_letter("E")
         if provaF > 0:
             place_letter("f", rand_word)
-        elif provaF < 0:
-            box_letter("F")
+        #elif provaF < 0:
+        #    box_letter("F")
         if provaG > 0:
             place_letter("g", rand_word)
-        elif provaG < 0:
-            box_letter("G")
+        #elif provaG < 0:
+        #    box_letter("G")
         if provaH > 0:
             place_letter("h", rand_word)
-        elif provaH < 0:
-            box_letter("H")
+        #elif provaH < 0:
+        #    box_letter("H")
         if provaI > 0:
             place_letter("i", rand_word)
-        elif provaI < 0:
-            box_letter("I")
+        #elif provaI < 0:
+        #    box_letter("I")
         if provaJ > 0:
             place_letter("j", rand_word)
-        elif provaJ < 0:
-            box_letter("J")
+        #elif provaJ < 0:
+        #    box_letter("J")
         if provaK > 0:
             place_letter("k", rand_word)
-        elif provaK < 0:
-            box_letter("K")
+        #elif provaK < 0:
+        #    box_letter("K")
         if provaL > 0:
             place_letter("l", rand_word)
-        elif provaL < 0:
-            box_letter("L")
+        #elif provaL < 0:
+        #    box_letter("L")
         if provaM > 0:
             place_letter("m", rand_word)
-        elif provaM < 0:
-            box_letter("M")
+        #elif provaM < 0:
+        #    box_letter("M")
         if provaN > 0:
             place_letter("n", rand_word)
-        elif provaN < 0:
-            box_letter("N")
+        #elif provaN < 0:
+        #    box_letter("N")
         if provaO > 0:
             place_letter("o", rand_word)
-        elif provaO < 0:
-            box_letter("O")
+        #elif provaO < 0:
+        #    box_letter("O")
         if provaP > 0:
             place_letter("p", rand_word)
-        elif provaP < 0:
-            box_letter("P")
+        #elif provaP < 0:
+        #    box_letter("P")
         if provaQ > 0:
             place_letter("q", rand_word)
-        elif provaQ < 0:
-            box_letter("Q")
+        #elif provaQ < 0:
+        #    box_letter("Q")
         if provaR > 0:
             place_letter("r", rand_word)
-        elif provaR < 0:
-            box_letter("R")
+        #elif provaR < 0:
+        #    box_letter("R")
         if provaS > 0:
             place_letter("s", rand_word)
-        elif provaS < 0:
-            box_letter("S")
+        #elif provaS < 0:
+        #    box_letter("S")
         if provaT > 0:
             place_letter("t", rand_word)
-        elif provaT < 0:
-            box_letter("T")
+        #elif provaT < 0:
+        #    box_letter("T")
         if provaU > 0:
             place_letter("u", rand_word)
-        elif provaU < 0:
-            box_letter("U")
+        #elif provaU < 0:
+        #    box_letter("U")
         if provaV > 0:
             place_letter("v", rand_word)
-        elif provaV < 0:
-            box_letter("V")
+        #elif provaV < 0:
+        #    box_letter("V")
         if provaW > 0:
             place_letter("w", rand_word)
-        elif provaW < 0:
-            box_letter("W")
+        #elif provaW < 0:
+        #    box_letter("W")
         if provaX > 0:
             place_letter("x", rand_word)
-        elif provaX < 0:
-            box_letter("X")
+        #elif provaX < 0:
+        #    box_letter("X")
         if provaY > 0:
             place_letter("y", rand_word)
-        elif provaY < 0:
-            box_letter("Y")
+        #elif provaY < 0:
+        #    box_letter("Y")
         if provaZ > 0:
             place_letter("z", rand_word)
-        elif provaZ < 0:
-            box_letter("Z")
+        #elif provaZ < 0:
+        #    box_letter("Z")
         
         pygame.display.update()
 
