@@ -15,7 +15,7 @@ FONT2 = pygame.font.SysFont("Arial", 60, bold=True)
 
 """
 uncomment the following two lines to print 
-in the terminal the stats of the player
+in the terminal the stats of the players
 """
 #a = Dbase(dbase="hangman.db").view()
 #print(a)
@@ -70,7 +70,7 @@ def main_menu_eng() -> None:
                 if ita_but.checkForInput(mouse_pos):
                     main_menu_ita()
                 if quick_but.checkForInput(mouse_pos):
-                    word = fast_eng()
+                    word = fast(lang)
                     game(word)
 
         pygame.display.update()
@@ -125,7 +125,7 @@ def main_menu_ita() -> None:
                 if eng_but.checkForInput(mouse_pos):
                     main_menu_eng()
                 if quick_but.checkForInput(mouse_pos):
-                    word = fast_ita()
+                    word = fast(lang)
                     game(word)
 
         pygame.display.update()
@@ -176,15 +176,15 @@ def play_menu_eng() -> None:
                     main_menu_eng()
                 if easy_but.checkForInput(play_mouse_pos):
                     diff = 1
-                    word = get_word_easy_eng()
+                    word = get_word_easy(lang)
                     game(word)
                 if medium_but.checkForInput(play_mouse_pos):
                     diff = 2
-                    word = get_word_med_eng()
+                    word = get_word_med(lang)
                     game(word)
                 if hard_but.checkForInput(play_mouse_pos):
                     diff = 3
-                    word = get_word_hard_eng()
+                    word = get_word_hard(lang)
                     game(word)
 
         pygame.display.update()
@@ -234,15 +234,15 @@ def play_menu_ita() -> None:
                     main_menu_ita()
                 if easy_but.checkForInput(play_mouse_pos):
                     diff = 1
-                    word = get_word_easy_ita()
+                    word = get_word_easy(lang)
                     game(word)
                 if medium_but.checkForInput(play_mouse_pos):
                     diff = 2
-                    word = get_word_med_ita()
+                    word = get_word_med(lang)
                     game(word)
                 if hard_but.checkForInput(play_mouse_pos):
                     diff = 3
-                    word = get_word_hard_ita()
+                    word = get_word_hard(lang)
                     game(word)
 
         pygame.display.update()
@@ -346,28 +346,29 @@ def game(rand_word: str) -> None:
         if text_box_num == 15:
             text_box_space = 10
 
-        if life == 10:
-            draw(life)
-        elif life == 9:
-            draw(life)
-        elif life == 8:
-            draw(life)
-        elif life == 7:
-            draw(life)
-        elif life == 6:
-            draw(life)
-        elif life == 5:
-            draw(life)
-        elif life == 4:
-            draw(life)
-        elif life == 3:
-            draw(life)
-        elif life == 2:
-            draw(life)
-        elif life == 1:
-            draw(life)
-        elif life == 0:
-            lose_menu()
+        match life:
+            case 10:
+                draw(life)
+            case 9:
+                draw(life)
+            case 8:
+                draw(life)
+            case 7:
+                draw(life)
+            case 6:
+                draw(life)
+            case 5:
+                draw(life)
+            case 4:
+                draw(life)
+            case 3:
+                draw(life)
+            case 2:
+                draw(life)
+            case 1:
+                draw(life)
+            case 0:
+                lose_menu()
 
         counter = 0
         space = 10
