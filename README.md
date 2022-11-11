@@ -11,7 +11,7 @@
 
 - ### Can choose to play a quick game or select different game difficulties (easy, medium, hard)
 
-- ### Can store your name and your score, you can see them from stats menu (work in progress)
+- ### Can store your name and your score, you can see them from stats menu (work in progress, uncomment lines 20-21 in main.py to see your stats in the terminal)
 
 - ### Quick game assigns the player 100 points
 
