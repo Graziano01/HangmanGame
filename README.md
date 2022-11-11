@@ -1,6 +1,9 @@
-# Hangman Game, Quality Development project
+# **Hangman Game, Quality Development project**
 
-![alt text](/home/graziano/Desktop/GitHub/HangmanGame/assets/img.png "Hangman Game")
+<p align="center">
+<img src="https://github.com/Graziano01/HangmanGame/blob/main/assets/img.png?raw=true" title="Hangman Game">
+</p>
+
 
 ## Feature
 
