@@ -25,8 +25,16 @@
 
 - ### Pygame
 
+- ### Pytest (for devs)
+
+- ### Pytest-mock (for devs)
+
+- ### Pytest-cov (for devs)
+
+- ### Pylint (for devs)
+
 ```shell
-python3 -m pip install -U pygame --user
+pip install -r requirements.txt && pip install -r requirements_dev.txt
 ```
 
 
