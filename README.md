@@ -1,5 +1,7 @@
 # Hangman Game, Quality Development project
 
+![alt text](/home/graziano/Desktop/GitHub/HangmanGame/assets/img.png "Hangman Game")
+
 ## Feature
 
 - ### English and Italian version of the game (you can click the flag in the top left corner in the main menu to switch language)
